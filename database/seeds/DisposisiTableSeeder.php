@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Disposisi;
+use App\Models\DisposisiList;
 use \Carbon\Carbon;
 class DisposisiTableSeeder extends Seeder
 {
@@ -12,9 +12,9 @@ class DisposisiTableSeeder extends Seeder
      */
     public function run()
     {
-        Disposisi::truncate();
+        DisposisiList::truncate();
 
-        $disposisi = [
+        $disposisi_list = [
             [
               'id' => 1,
               'nama_disposisi' => 'Disetujui Oleh Direktur',
@@ -35,6 +35,6 @@ class DisposisiTableSeeder extends Seeder
             ],
         ];
 
-        Disposisi::insert($disposisi);
+        DisposisiList::insert($disposisi_list);
     }
 }

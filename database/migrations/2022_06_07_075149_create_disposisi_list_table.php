@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDisposisiTable extends Migration
+class CreateDisposisiListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDisposisiTable extends Migration
      */
     public function up()
     {
-        Schema::create('disposisi', function (Blueprint $table) {
+        Schema::create('disposisi_list', function (Blueprint $table) {
             $table->bigInteger('id')->primary();
             $table->string('nama_disposisi');
             $table->timestamps();
