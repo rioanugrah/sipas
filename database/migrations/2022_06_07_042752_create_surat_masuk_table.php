@@ -16,7 +16,7 @@ class CreateSuratMasukTable extends Migration
         Schema::create('surat_masuk', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_pengirim_id');
-            $table->uuid('user_terima_id');
+            $table->uuid('user_terima_id')->nullable();
             $table->string('nomor_surat_masuk');
             $table->string('nomor_agenda_surat_masuk');
             $table->string('asal_surat');
