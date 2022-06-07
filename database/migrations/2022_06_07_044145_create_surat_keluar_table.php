@@ -17,9 +17,9 @@ class CreateSuratKeluarTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('user_pengirim_id');
             $table->uuid('user_terima_id');
-            $table->string('nomor_surat_masuk');
-            $table->string('nomor_agenda_surat_masuk');
-            $table->string('asal_surat');
+            $table->string('nomor_surat_keluar');
+            $table->string('nomor_agenda_surat_keluar');
+            $table->string('tujuan_surat');
             $table->string('isi_ringkasan');
             $table->string('keterangan');
             $table->uuid('klasifikasi_id');
