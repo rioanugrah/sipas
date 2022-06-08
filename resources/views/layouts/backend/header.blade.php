@@ -87,46 +87,6 @@
 
 
             <div class="d-flex align-items-center overflow-auto pt-3 pt-lg-0">
-
-                <div class="d-flex align-items-center">
-
-                    <span class="fs-7 fw-bolder text-gray-700 pe-4 text-nowrap d-none d-xxl-block">Sort By:</span>
-
-
-                    <select class="form-select form-select-sm form-select-solid w-100px w-xxl-125px"
-                        data-control="select2" data-placeholder="Latest" data-hide-search="true">
-                        <option value=""></option>
-                        <option value="1" selected="selected">Latest</option>
-                        <option value="2">In Progress</option>
-                        <option value="3">Done</option>
-                    </select>
-
-                </div>
-
-
-                <div class="d-flex align-items-center">
-
-                    <div class="bullet bg-secondary h-35px w-1px mx-5"></div>
-
-
-                    <span class="fs-7 text-gray-700 fw-bolder d-none d-sm-block">Impact
-                        <span class="d-none d-xxl-inline">Level</span>:</span>
-
-
-                    <div class="d-flex align-items-center ps-4" id="kt_toolbar">
-                        <div id="kt_toolbar_slider" class="noUi-target noUi-target-primary w-75px w-xxl-150px noUi-sm">
-                        </div>
-                        <span id="kt_toolbar_slider_value"
-                            class="d-flex flex-center bg-light-primary rounded-circle w-35px h-35px ms-4 fs-7 fw-bolder text-primary"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Set impact level"></span>
-                    </div>
-
-
-                    <div class="bullet bg-secondary h-35px w-1px mx-5"></div>
-
-                </div>
-
-
                 <div class="d-flex align-items-center">
 
                     <span class="fs-7 text-gray-700 fw-bolder pe-3 d-none d-xxl-block">Quick Tools:</span>
