@@ -37,10 +37,10 @@
                                 <!--begin::Info-->
                                 <div class="flex-grow-1 me-2">
                                     <!--begin::Username-->
-                                    <a href="#" class="text-white text-hover-primary fs-6 fw-bold">Paul Melone</a>
+                                    <a href="#" class="text-white text-hover-primary fs-6 fw-bold">{{ auth()->user()->name }}</a>
                                     <!--end::Username-->
                                     <!--begin::Description-->
-                                    <span class="text-gray-600 fw-bold d-block fs-8 mb-1">Python Dev</span>
+                                    <span class="text-gray-600 fw-bold d-block fs-8 mb-1">{{ auth()->user()->roles->nama_role }}</span>
                                     <!--end::Description-->
                                     <!--begin::Label-->
                                     <div class="d-flex align-items-center text-success fs-9">
@@ -68,14 +68,14 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
-                                                    <img alt="Logo" src="assets/media/avatars/150-26.jpg" />
+                                                    <img alt="Logo" src="{{ $link }}/assets/media/avatars/150-26.jpg" />
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
                                                 <div class="d-flex flex-column">
-                                                    <div class="fw-bolder d-flex align-items-center fs-5">Max Smith
+                                                    <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
                                                         <span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-                                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                                    <a href="#" class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
                                                 </div>
                                                 <!--end::Username-->
                                             </div>
@@ -158,7 +158,7 @@
                                             <a href="#" class="menu-link px-5">
                                                 <span class="menu-title position-relative">Language
 													<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-													<img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="" /></span></span>
+													<img class="w-15px h-15px rounded-1 ms-2" src="{{ $link }}/assets/media/flags/united-states.svg" alt="" /></span></span>
                                             </a>
                                             <!--begin::Menu sub-->
                                             <div class="menu-sub menu-sub-dropdown w-175px py-4">
@@ -166,7 +166,7 @@
                                                 <div class="menu-item px-3">
                                                     <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
-															<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
+															<img class="rounded-1" src="{{ $link }}/assets/media/flags/united-states.svg" alt="" />
 														</span>English</a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -174,7 +174,7 @@
                                                 <div class="menu-item px-3">
                                                     <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                         <span class="symbol symbol-20px me-4">
-															<img class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
+															<img class="rounded-1" src="{{ $link }}/assets/media/flags/spain.svg" alt="" />
 														</span>Spanish</a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -182,7 +182,7 @@
                                                 <div class="menu-item px-3">
                                                     <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                         <span class="symbol symbol-20px me-4">
-															<img class="rounded-1" src="assets/media/flags/germany.svg" alt="" />
+															<img class="rounded-1" src="{{ $link }}/assets/media/flags/germany.svg" alt="" />
 														</span>German</a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -190,7 +190,7 @@
                                                 <div class="menu-item px-3">
                                                     <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                         <span class="symbol symbol-20px me-4">
-															<img class="rounded-1" src="assets/media/flags/japan.svg" alt="" />
+															<img class="rounded-1" src="{{ $link }}/assets/media/flags/japan.svg" alt="" />
 														</span>Japanese</a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -198,7 +198,7 @@
                                                 <div class="menu-item px-3">
                                                     <a href="../../demo8/dist/account/settings.html" class="menu-link d-flex px-5">
                                                         <span class="symbol symbol-20px me-4">
-															<img class="rounded-1" src="assets/media/flags/france.svg" alt="" />
+															<img class="rounded-1" src="{{ $link }}/assets/media/flags/france.svg" alt="" />
 														</span>French</a>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -213,7 +213,12 @@
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
-                                            <a href="../../demo8/dist/authentication/flows/basic/sign-in.html" class="menu-link px-5">Sign Out</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                            <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();" class="menu-link px-5">Sign Out</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu separator-->
@@ -295,7 +300,7 @@
                                             <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
-                                                    <img src="assets/media/avatars/150-1.jpg" alt="" />
+                                                    <img src="{{ $link }}/assets/media/avatars/150-1.jpg" alt="" />
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -310,7 +315,7 @@
                                             <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
-                                                    <img src="assets/media/avatars/150-3.jpg" alt="" />
+                                                    <img src="{{ $link }}/assets/media/avatars/150-3.jpg" alt="" />
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -325,7 +330,7 @@
                                             <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
-                                                    <img src="assets/media/avatars/150-8.jpg" alt="" />
+                                                    <img src="{{ $link }}/assets/media/avatars/150-8.jpg" alt="" />
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -340,7 +345,7 @@
                                             <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
-                                                    <img src="assets/media/avatars/150-11.jpg" alt="" />
+                                                    <img src="{{ $link }}/assets/media/avatars/150-11.jpg" alt="" />
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -355,7 +360,7 @@
                                             <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
-                                                    <img src="assets/media/avatars/150-12.jpg" alt="" />
+                                                    <img src="{{ $link }}/assets/media/avatars/150-12.jpg" alt="" />
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -374,7 +379,7 @@
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
                                                     <span class="symbol-label bg-light">
-															<img class="w-20px h-20px" src="assets/media/svg/brand-logos/volicity-9.svg" alt="" />
+															<img class="w-20px h-20px" src="{{ $link }}/assets/media/svg/brand-logos/volicity-9.svg" alt="" />
 														</span>
                                                 </div>
                                                 <!--end::Symbol-->
@@ -391,7 +396,7 @@
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
                                                     <span class="symbol-label bg-light">
-															<img class="w-20px h-20px" src="assets/media/svg/brand-logos/tvit.svg" alt="" />
+															<img class="w-20px h-20px" src="{{ $link }}/assets/media/svg/brand-logos/tvit.svg" alt="" />
 														</span>
                                                 </div>
                                                 <!--end::Symbol-->
@@ -408,7 +413,7 @@
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
                                                     <span class="symbol-label bg-light">
-															<img class="w-20px h-20px" src="assets/media/svg/misc/infography.svg" alt="" />
+															<img class="w-20px h-20px" src="{{ $link }}/assets/media/svg/misc/infography.svg" alt="" />
 														</span>
                                                 </div>
                                                 <!--end::Symbol-->
@@ -425,7 +430,7 @@
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
                                                     <span class="symbol-label bg-light">
-															<img class="w-20px h-20px" src="assets/media/svg/brand-logos/leaf.svg" alt="" />
+															<img class="w-20px h-20px" src="{{ $link }}/assets/media/svg/brand-logos/leaf.svg" alt="" />
 														</span>
                                                 </div>
                                                 <!--end::Symbol-->
@@ -442,7 +447,7 @@
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-40px me-4">
                                                     <span class="symbol-label bg-light">
-															<img class="w-20px h-20px" src="assets/media/svg/brand-logos/tower.svg" alt="" />
+															<img class="w-20px h-20px" src="{{ $link }}/assets/media/svg/brand-logos/tower.svg" alt="" />
 														</span>
                                                 </div>
                                                 <!--end::Symbol-->
@@ -2440,7 +2445,7 @@
                     <div class="header-brand">
                         <!--begin::Logo-->
                         <a href="../../demo8/dist/index.html">
-                            <img alt="Logo" src="assets/media/logos/logo-1-dark.svg" class="h-25px h-lg-25px" />
+                            <img alt="Logo" src="{{ $link }}/assets/media/logos/logo-1-dark.svg" class="h-25px h-lg-25px" />
                         </a>
                         <!--end::Logo-->
                         <!--begin::Aside minimize-->
@@ -2487,7 +2492,7 @@
                             <!--begin::Page title-->
                             <div class="page-title d-flex flex-column me-5">
                                 <!--begin::Title-->
-                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Dashboard</h1>
+                                <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">@yield('title')</h1>
                                 <!--end::Title-->
                                 <!--begin::Breadcrumb-->
                                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
@@ -2582,7 +2587,7 @@
                                             <!--begin::Menu-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
                                                 <!--begin::Heading-->
-                                                <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('assets/media/misc/pattern-1.jpg')">
+                                                <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('{{ $link }}/assets/media/misc/pattern-1.jpg')">
                                                     <!--begin::Title-->
                                                     <h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifications
                                                         <span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
@@ -2866,7 +2871,7 @@
                                                             <!--end::Section-->
                                                             <!--begin::Illustration-->
                                                             <div class="text-center px-4">
-                                                                <img class="mw-100 mh-200px" alt="image" src="assets/media/illustrations/sketchy-1/1.png" />
+                                                                <img class="mw-100 mh-200px" alt="image" src="{{ $link }}/assets/media/illustrations/sketchy-1/1.png" />
                                                             </div>
                                                             <!--end::Illustration-->
                                                         </div>
@@ -3123,7 +3128,7 @@
                                             <!--begin::Menu-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column w-250px w-lg-325px" data-kt-menu="true">
                                                 <!--begin::Heading-->
-                                                <div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10" style="background-image:url('assets/media/misc/pattern-1.jpg')">
+                                                <div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10" style="background-image:url('{{ $link }}/assets/media/misc/pattern-1.jpg')">
                                                     <!--begin::Title-->
                                                     <h3 class="text-white fw-bold mb-3">Quick Links</h3>
                                                     <!--end::Title-->
@@ -3593,7 +3598,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3622,7 +3627,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3651,7 +3656,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/vimeo.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/vimeo.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3680,7 +3685,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3709,7 +3714,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/kickstarter.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/kickstarter.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3764,7 +3769,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3793,7 +3798,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3822,7 +3827,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3877,7 +3882,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/kickstarter.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/kickstarter.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3906,7 +3911,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3935,7 +3940,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/vimeo.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/vimeo.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -3964,7 +3969,7 @@
                                                                     <td>
                                                                         <div class="symbol symbol-45px me-2">
                                                                             <span class="symbol-label">
-																					<img src="assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
+																					<img src="{{ $link }}/assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
 																				</span>
                                                                         </div>
                                                                     </td>
@@ -4464,7 +4469,7 @@
                                             <div class="d-flex align-items-sm-center mb-7">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-60px symbol-2by3 me-4">
-                                                    <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-20.jpg')"></div>
+                                                    <div class="symbol-label" style="background-image: url('{{ $link }}/assets/media/stock/600x400/img-20.jpg')"></div>
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -4482,7 +4487,7 @@
                                             <div class="d-flex align-items-sm-center mb-7">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-60px symbol-2by3 me-4">
-                                                    <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-19.jpg')"></div>
+                                                    <div class="symbol-label" style="background-image: url('{{ $link }}/assets/media/stock/600x400/img-19.jpg')"></div>
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -4500,7 +4505,7 @@
                                             <div class="d-flex align-items-sm-center mb-7">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-60px symbol-2by3 me-4">
-                                                    <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-25.jpg')"></div>
+                                                    <div class="symbol-label" style="background-image: url('{{ $link }}/assets/media/stock/600x400/img-25.jpg')"></div>
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->
@@ -4518,7 +4523,7 @@
                                             <div class="d-flex align-items-sm-center">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-60px symbol-2by3 me-4">
-                                                    <div class="symbol-label" style="background-image: url('assets/media/stock/600x400/img-24.jpg')"></div>
+                                                    <div class="symbol-label" style="background-image: url('{{ $link }}/assets/media/stock/600x400/img-24.jpg')"></div>
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Title-->

@@ -18,6 +18,7 @@ class CreateDisposisiTable extends Migration
             $table->string('no_urut');
             $table->dateTime('tgl_diterima');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
