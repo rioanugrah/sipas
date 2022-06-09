@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="menu-item">
-    <a class="menu-link {{ Request::is('b/home*') ? 'active' : '' }}" href="{{ url('home') }}">
+    <a class="menu-link {{ Request::is('b/home*') ? 'active' : '' }}" href="{{ route('home') }}">
         <span class="menu-icon">
 
             <span class="svg-icon svg-icon-2">

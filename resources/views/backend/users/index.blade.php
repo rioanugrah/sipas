@@ -607,8 +607,8 @@
                     ajax: "{{ route('users') }}",
                     columns: [
                         {
-                            data: 'id',
-                            name: 'id'
+                            data: 'id_user',
+                            name: 'id_user'
                         },
                         {
                             data: 'name',

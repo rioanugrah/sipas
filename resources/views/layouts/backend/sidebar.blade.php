@@ -76,7 +76,7 @@
 
 
                             <div class="menu-item px-5">
-                                <a href="../../demo8/dist/account/overview.html" class="menu-link px-5">My
+                                <a href="{{ route('index.user',['id' => auth()->user()->id]) }}" class="menu-link px-5">My
                                     Profile</a>
                             </div>
 

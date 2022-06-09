@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    public $keyType = 'string';
     /**
      * The attributes that are mass assignable.
      *
