@@ -513,13 +513,13 @@
                         <thead>
                             
                             <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-                                <th>ID</th>
-                                <th class="min-w-125px">User</th>
+                                <th class="text-left">ID</th>
+                                <th class="text-left">User</th>
                                 {{-- <th class="min-w-125px">Role</th>
                                 <th class="min-w-125px">Last login</th>
                                 <th class="min-w-125px">Two-step</th>
                                 <th class="min-w-125px">Joined Date</th> --}}
-                                <th class="text-end min-w-100px">Actions</th>
+                                <th class="text-left">Actions</th>
                             </tr>
                             
                         </thead>
