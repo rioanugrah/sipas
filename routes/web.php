@@ -18,5 +18,17 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::prefix('b')->group(function () {
+        Route::get('/home', 'HomeController@index')->name('home');
+        Route::prefix('surat_masuk')->group(function () {
+            Route::get('/', 'SuratMasukController@index')->name('surat_masuk');
+        });
+        Route::prefix('surat_keluar')->group(function () {
+            Route::get('/', 'SuratKeluarController@index')->name('surat_keluar');
+        });
+        Route::prefix('pengguna')->group(function () {
+            Route::get('/', 'UsersController@index')->name('users');
+        });
+    });
+});

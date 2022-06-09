@@ -22,6 +22,7 @@
     {{-- <link href="{{ $link }}/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" /> --}}
     <link href="{{ $link }}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="{{ $link }}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    @yield('css')
 </head>
 
 <body id="kt_body" class="header-tablet-and-mobile-fixed aside-enabled">
@@ -30,10 +31,9 @@
             @include('layouts.backend.sidebar')
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 @include('layouts.backend.header')
-
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-
-                    <div class="post d-flex flex-column-fluid" id="kt_post">
+                    @yield('content')
+                    {{-- <div class="post d-flex flex-column-fluid" id="kt_post">
 
                         <div id="kt_content_container" class="container-xxl">
 
@@ -1962,20 +1962,15 @@
 
                         </div>
 
-                    </div>
-
+                    </div> --}}
                 </div>
-
-
                 <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
-
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
-
                         <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2021©</span>
-                            <a href="https://keenthemes.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">Keenthemes</a>
+                            <span class="text-muted fw-bold me-1">Copyright © 2022</span>
+                            <a href="#" target="_blank"
+                                class="text-gray-800 text-hover-primary">SIPAS</a>
                         </div>
 
 
@@ -2003,5 +1998,5 @@
 </body>
 <script src="{{ $link }}/assets/plugins/global/plugins.bundle.js"></script>
 <script src="{{ $link }}/assets/js/scripts.bundle.js"></script>
-
+@yield('js')
 </html>

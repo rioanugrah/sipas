@@ -1,2 +1,6 @@
 @extends('layouts.backend.app')
-@section('title')Dashboard 1 @endsection
+@section('title')Dashboard @endsection
+
+@section('content')
+    
+@endsection
