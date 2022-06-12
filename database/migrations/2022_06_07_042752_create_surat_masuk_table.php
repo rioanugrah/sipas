@@ -15,7 +15,7 @@ class CreateSuratMasukTable extends Migration
     {
         Schema::create('surat_masuk', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_pengirim_id');
+            $table->uuid('user_pengirim_id')->nullable();
             $table->uuid('user_terima_id')->nullable();
             $table->string('nomor_surat_masuk');
             $table->string('nomor_agenda_surat_masuk');
@@ -25,6 +25,7 @@ class CreateSuratMasukTable extends Migration
             $table->uuid('klasifikasi_id');
             $table->date('tanggal_surat');
             $table->date('tanggal_terima');
+            $table->enum('status',['Open','Close']);
             $table->string('file');
             $table->timestamps();
             $table->softDeletes();

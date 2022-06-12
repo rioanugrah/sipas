@@ -15,7 +15,7 @@ class CreateSuratKeluarTable extends Migration
     {
         Schema::create('surat_keluar', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_pengirim_id');
+            $table->uuid('user_pengirim_id')->nullable();
             $table->uuid('user_terima_id')->nullable();
             $table->string('nomor_surat_keluar');
             $table->string('nomor_agenda_surat_keluar');
