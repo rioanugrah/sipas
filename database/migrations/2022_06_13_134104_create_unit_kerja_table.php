@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDisposisiListTable extends Migration
+class CreateUnitKerjaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateDisposisiListTable extends Migration
      */
     public function up()
     {
-        Schema::create('disposisi_list', function (Blueprint $table) {
-            $table->bigInteger('id')->primary();
-            $table->string('nama_disposisi');
+        Schema::create('unit_kerja', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('unit_kerja');
+            $table->uuid('instansi_id');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('instansi_id')->references('id')->on('instansi');
         });
     }
 
@@ -28,6 +30,6 @@ class CreateDisposisiListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disposisi_list');
+        Schema::dropIfExists('unit_kerja');
     }
 }

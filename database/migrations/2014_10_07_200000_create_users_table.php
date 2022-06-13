@@ -21,10 +21,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->uuid('instansi_id')->nullable();
+            $table->uuid('unit_kerja_id')->nullable();
             $table->rememberToken();
             $table->enum('is_active',['1','0'])->default('1')->nullable();
             $table->integer('is_role')->nullable();
             $table->timestamps();
+
+            // $table->foreign('instansi_id')->references('id')->on('instansi');
         });
     }
 

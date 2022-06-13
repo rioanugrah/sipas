@@ -32,8 +32,8 @@ class CreateSuratMasukTable extends Migration
             
             //Foreign Key
             $table->foreign('klasifikasi_id')->references('id')->on('klasifikasi');
-            $table->foreign('user_pengirim_id')->references('id')->on('users');
-            $table->foreign('user_terima_id')->references('id')->on('users');
+            // $table->foreign('user_pengirim_id')->references('id')->on('users');
+            // $table->foreign('user_terima_id')->references('id')->on('users');
         });
     }
 

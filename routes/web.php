@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::prefix('surat_keluar')->group(function () {
             Route::get('/', 'SuratKeluarController@index')->name('surat_keluar');
         });
+        Route::prefix('instansi')->group(function () {
+            Route::get('/', 'InstansiController@index')->name('instansi');
+        });
         Route::prefix('pengguna')->group(function () {
             Route::get('/', 'UsersController@index')->name('users');
             Route::get('/{id}', 'UsersController@index_user')->name('index.user');

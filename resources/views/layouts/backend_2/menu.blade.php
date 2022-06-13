@@ -3,6 +3,14 @@
         <a href="{{ route('home') }}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
     </li>
     <li>
+        <a href="javascript:void()" class="has-arrow"><i class="fa fa-gears"></i><span>Setup Management</span></a>
+        <ul>
+            <li class="menu-link {{ Request::is('b/instansi*') ? 'active' : '' }}"><a href="{{ route('instansi') }}">Instansi / Lembaga</a></li>
+            <li class="menu-link {{ Request::is('b/klasifikasi*') ? 'active' : '' }}"><a href="#">Data Klasifikasi</a></li>
+            <li class="menu-link {{ Request::is('b/disposisi_keluar*') ? 'active' : '' }}"><a href="#">Unit Kerja</a></li>
+        </ul>
+    </li>
+    <li>
         <a href="javascript:void()" class="has-arrow"><i class="fa fa-envelope-o"></i><span>Surat</span></a>
         <ul>
             <li class="menu-link {{ Request::is('b/surat_masuk*') ? 'active' : '' }}"><a href="{{ route('surat_masuk') }}">Surat Masuk</a></li>

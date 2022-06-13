@@ -33,24 +33,24 @@ class RolesTableSeeder extends Seeder
               'created_at' => Carbon::now(),
               'updated_at' => Carbon::now(),
             ],
-            [
-              'id' => 4,
-              'nama_role' => 'Komisaris Utama',
-              'created_at' => Carbon::now(),
-              'updated_at' => Carbon::now(),
-            ],
-            [
-              'id' => 5,
-              'nama_role' => 'Direktur',
-              'created_at' => Carbon::now(),
-              'updated_at' => Carbon::now(),
-            ],
-            [
-              'id' => 6,
-              'nama_role' => 'Sekretaris',
-              'created_at' => Carbon::now(),
-              'updated_at' => Carbon::now(),
-            ],
+            // [
+            //   'id' => 4,
+            //   'nama_role' => 'Komisaris Utama',
+            //   'created_at' => Carbon::now(),
+            //   'updated_at' => Carbon::now(),
+            // ],
+            // [
+            //   'id' => 5,
+            //   'nama_role' => 'Direktur',
+            //   'created_at' => Carbon::now(),
+            //   'updated_at' => Carbon::now(),
+            // ],
+            // [
+            //   'id' => 6,
+            //   'nama_role' => 'Sekretaris',
+            //   'created_at' => Carbon::now(),
+            //   'updated_at' => Carbon::now(),
+            // ],
         ];
 
         Roles::insert($roles);

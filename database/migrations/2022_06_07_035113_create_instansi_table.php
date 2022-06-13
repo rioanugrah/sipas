@@ -21,6 +21,7 @@ class CreateInstansiTable extends Migration
             $table->integer('status_instansi');
             $table->string('nama_kepala_instansi');
             $table->string('nip_instansi');
+            $table->string('npwp_instansi');
             $table->string('email_instansi');
             $table->string('telp_instansi');
             $table->timestamps();
