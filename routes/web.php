@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::prefix('instansi')->group(function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
+            Route::post('/simpan', 'InstansiController@simpan')->name('instansi.simpan');
         });
         Route::prefix('pengguna')->group(function () {
             Route::get('/', 'UsersController@index')->name('users');

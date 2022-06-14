@@ -24,6 +24,7 @@ class CreateInstansiTable extends Migration
             $table->string('npwp_instansi');
             $table->string('email_instansi');
             $table->string('telp_instansi');
+            $table->string('logo_instansi')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
