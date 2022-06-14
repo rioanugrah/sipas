@@ -1824,7 +1824,8 @@
     animation-delay: .55s
 }
 
-.right_icon_bar ul>li {
+
+/* .right_icon_bar ul>li {
     opacity: 0;
     transform: translateX(15px);
     -webkit-animation: eliment-animation .3s ease-in-out .33333s;
@@ -1866,7 +1867,7 @@
 .right_icon_bar ul>li:nth-child(7) {
     -webkit-animation-delay: .4s;
     animation-delay: .4s
-}
+} */
 
 .notifications>li {
     opacity: 0;
@@ -2821,11 +2822,11 @@ html.fullscreen-bg #wrapper {
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    width: calc(100% - 330px);
+    /* width: calc(100% - 330px); */
     float: right;
     position: relative;
-    margin-top: 60px;
-    margin-right: 50px;
+    margin-top: 80px;
+    /* margin-right: 50px; */
     padding: 0 20px;
     background: var(--body-color)
 }
@@ -3478,7 +3479,7 @@ html.fullscreen-bg #wrapper {
 }
 
 .layout-fullwidth #wrapper #main-content {
-    width: calc(100% - 50px)
+    width: calc(100%)
 }
 
 .user-account {
