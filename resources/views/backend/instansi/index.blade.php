@@ -38,7 +38,7 @@
                     <table class="table table-bordered table-hover instansi table-custom">
                         <thead>
                             <tr>
-                                <th class="text-center">#</th>
+                                {{-- <th class="text-center">#</th> --}}
                                 <th class="text-center">Instansi</th>
                                 <th class="text-center">Lembaga</th>
                                 <th class="text-center">Alamat</th>
@@ -82,10 +82,11 @@
         processing: true,
         serverSide: true,
         ajax: "{{ route('instansi') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
+        columns: [
+            // {
+            //     data: 'id',
+            //     name: 'id'
+            // },
             {
                 data: 'nama_instansi',
                 name: 'nama_instansi'
@@ -113,6 +114,10 @@
 
     function add() {
         $('#modalBuat').modal();
+    }
+
+    function edit(p) {
+        alert(p);
     }
 
     $('.upload-form').submit(function(e) {

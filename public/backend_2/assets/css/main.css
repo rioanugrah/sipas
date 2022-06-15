@@ -2822,7 +2822,7 @@ html.fullscreen-bg #wrapper {
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    /* width: calc(100% - 330px); */
+    width: calc(100% - 330px);
     float: right;
     position: relative;
     margin-top: 80px;

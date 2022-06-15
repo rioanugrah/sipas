@@ -31,6 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
             Route::post('/simpan', 'InstansiController@simpan')->name('instansi.simpan');
         });
+        Route::prefix('unit_kerja')->group(function () {
+            Route::get('/', 'UnitKerjaController@index')->name('unit_kerja');
+            Route::post('/simpan', 'UnitKerjaController@simpan')->name('unit_kerja.simpan');
+        });
         Route::prefix('pengguna')->group(function () {
             Route::get('/', 'UsersController@index')->name('users');
             Route::get('/{id}', 'UsersController@index_user')->name('index.user');

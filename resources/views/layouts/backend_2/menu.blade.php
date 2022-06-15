@@ -7,7 +7,7 @@
         <ul>
             <li class="menu-link {{ Request::is('b/instansi*') ? 'active' : '' }}"><a href="{{ route('instansi') }}">Instansi / Lembaga</a></li>
             <li class="menu-link {{ Request::is('b/klasifikasi*') ? 'active' : '' }}"><a href="#">Data Klasifikasi</a></li>
-            <li class="menu-link {{ Request::is('b/disposisi_keluar*') ? 'active' : '' }}"><a href="#">Unit Kerja</a></li>
+            <li class="menu-link {{ Request::is('b/unit_kerja*') ? 'active' : '' }}"><a href="{{ route('unit_kerja') }}">Unit Kerja</a></li>
         </ul>
     </li>
     <li>

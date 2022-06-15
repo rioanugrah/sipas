@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\Instansi;
+use App\Models\UnitKerja;
 use Validator;
 use DataTables;
-class InstansiController extends Controller
+class UnitKerjaController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Instansi::all();
+            $data = UnitKerja::all();
                 return DataTables::of($data)
                         ->addIndexColumn()
                         ->addColumn('action', function($row){
@@ -28,31 +28,19 @@ class InstansiController extends Controller
                         ->rawColumns(['action'])
                         ->make(true);
         }
-        return view('backend.instansi.index');
+        return view('backend.unit_kerja.index');
     }
 
     public function simpan(Request $request)
     {
         $rules = [
-            'nama_instansi' => 'required',
-            'nama_lembaga' => 'required',
-            'alamat_instansi' => 'required',
-            'nama_kepala_instansi' => 'required',
-            'nip_instansi' => 'required',
-            'npwp_instansi' => 'required',
-            'email_instansi' => 'required',
-            'telp_instansi' => 'required',
+            'unit_kerja' => 'required',
+            'instansi_id' => 'required',
         ];
 
         $messages = [
-            'nama_instansi.required'  => 'Instansi Wajib Diisi.',
-            'nama_lembaga.required'  => 'Lembaga Wajib Diisi.',
-            'alamat_instansi.required'  => 'Alamat Instansi Wajib Diisi.',
-            'nama_kepala_instansi.required'  => 'Kepala Instansi Wajib Diisi.',
-            'nip_instansi.required'  => 'NIP Instansi Wajib Diisi.',
-            'npwp_instansi.required'  => 'NPWP Instansi Wajib Diisi.',
-            'email_instansi.required'  => 'Email Instansi Wajib Diisi.',
-            'telp_instansi.required'  => 'Telpon Instansi Wajib Diisi.',
+            'unit_kerja.required'  => 'Unit Kerja Wajib Diisi.',
+            'instansi_id.required'  => 'Instansi Wajib Diisi.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -60,22 +48,12 @@ class InstansiController extends Controller
         if ($validator->passes()) {
             $input = $request->all();
             $input['id'] = Str::uuid()->toString();
-            $input['status_instansi'] = 1;
-
-            if($input['logo_instansi'] != null){
-                $imageInstansi = $request->file('logo_instansi');
-    
-                $imgInstansi = \Image::make($imageInstansi->path());
-                $imgInstansi = $imgInstansi->encode('webp', 75);
-                $input['logo_instansi'] = time().'.webp';
-                $imgInstansi->save(public_path('backend_2/logo_instansi/').$input['logo_instansi']);
-            }
             
-            $instansi = Instansi::create($input);
+            $unitKerja = UnitKerja::create($input);
 
             if($instansi){
                 $message_title="Berhasil !";
-                $message_content="Data Instansi ".$input['nama_instansi']." Berhasil Dibuat";
+                $message_content="Data Instansi ".$input['unit_kerja']." Berhasil Dibuat";
                 $message_type="success";
                 $message_succes = true;
             }
