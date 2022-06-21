@@ -18,6 +18,7 @@ class CreateKlasifikasiTable extends Migration
             $table->string('kode_klasifikasi',50);
             $table->string('judul_klasifikasi');
             $table->string('keterangan');
+            $table->uuid('instansi_id');
             $table->timestamps();
             $table->softDeletes();
         });

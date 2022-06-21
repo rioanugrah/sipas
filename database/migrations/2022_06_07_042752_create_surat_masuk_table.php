@@ -26,12 +26,13 @@ class CreateSuratMasukTable extends Migration
             $table->date('tanggal_surat');
             $table->date('tanggal_terima');
             $table->enum('status',['Open','Close']);
+            $table->string('status_surat');
             $table->string('file');
             $table->timestamps();
             $table->softDeletes();
             
             //Foreign Key
-            $table->foreign('klasifikasi_id')->references('id')->on('klasifikasi');
+            // $table->foreign('klasifikasi_id')->references('id')->on('klasifikasi');
             // $table->foreign('user_pengirim_id')->references('id')->on('users');
             // $table->foreign('user_terima_id')->references('id')->on('users');
         });

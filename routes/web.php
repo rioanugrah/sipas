@@ -20,6 +20,15 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('b')->group(function () {
+        // Route::get('/{any}', function($any){
+        //     return view('layouts.backend_4.master1');
+        // })->where('any', '([A-z\d-\/_.]+)?');
+        // Route::get('/home', function(){
+        //     return view('layouts.backend_4.master');
+        // })->name('view');
+        // Route::get('/home', 'DisplayController@index')->name('home');
+
+
         Route::get('/home', 'HomeController@index')->name('home');
         Route::prefix('surat_masuk')->group(function () {
             Route::get('/', 'SuratMasukController@index')->name('surat_masuk');
@@ -29,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::prefix('instansi')->group(function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
+            Route::get('/{id}', 'InstansiController@detail')->name('instansi.detail');
             Route::post('/simpan', 'InstansiController@simpan')->name('instansi.simpan');
         });
         Route::prefix('unit_kerja')->group(function () {

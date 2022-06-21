@@ -15,9 +15,13 @@ class InstansiController extends Controller
             $data = Instansi::all();
                 return DataTables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('nama_instansi', function($row){
+                            return '<a href="javascript:void()" onclick="detail(`'.$row->id.'`)">'.$row->nama_instansi.'</a>';
+                        })
                         ->addColumn('action', function($row){
-                            $btn = '<button type="button" onclick="edit("'.$row->id.'")" class="btn btn-info" title="Edit"><i class="fa fa-edit"></i></button>';
-                            $btn = $btn.'<button type="button" data-type="confirm" class="btn btn-danger js-sweetalert" title="Delete"><i class="fa fa-trash-o"></i></button>';
+                            $btn = '<button type="button" onclick="detail(`'.$row->id.'`)" class="btn btn-success" data-toggle="modal" title="View"><i class="fa fa-eye"></i></button>';
+                            $btn = $btn.'<button type="button" onclick="edit('.$row->id.')" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
+                            $btn = $btn.'<button type="button" onclick="hapus('.$row->id.')" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
                             // $btn = '<div class="btn-group">';
                             // $btn = $btn.'<a href="#" class="btn btn-success btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-eye"></i> View</a>';
                             // $btn = $btn.'<a href="#" class="btn btn-warning btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-edit"></i> Edit</a>';
@@ -25,7 +29,7 @@ class InstansiController extends Controller
                             // $btn = $btn.'</div>';
                             return $btn;
                         })
-                        ->rawColumns(['action'])
+                        ->rawColumns(['action','nama_instansi'])
                         ->make(true);
         }
         return view('backend.instansi.index');
@@ -94,5 +98,32 @@ class InstansiController extends Controller
                 'error' => $validator->errors()->all()
             ]
         );
+    }
+
+    public function detail($id)
+    {
+        $instansi = Instansi::find($id);
+        if(empty($instansi)){
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Tidak Ditemukan'
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'id' => $instansi->id,
+                'nama_instansi' => $instansi->nama_instansi,
+                'nama_lembaga' => $instansi->nama_lembaga,
+                'alamat_instansi' => $instansi->alamat_instansi,
+                'status_instansi' => $instansi->status_instansi == 1 ? 'Active' : 'Inactive',
+                'nama_kepala_instansi' => $instansi->nama_kepala_instansi,
+                'nip_instansi' => $instansi->nip_instansi,
+                'npwp_instansi' => $instansi->npwp_instansi,
+                'email_instansi' => $instansi->email_instansi,
+                'telp_instansi' => $instansi->telp_instansi,
+                'logo_instansi' => $instansi->logo_instansi,
+            ]
+        ]);
     }
 }
