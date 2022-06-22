@@ -15,6 +15,10 @@ class UnitKerjaController extends Controller
             $data = UnitKerja::all();
                 return DataTables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('instansi', function($row){
+                            return $row->instansi_id;
+                            // return '<a href="javascript:void()" onclick="detail(`'.$row->id.'`)">'.$row->nama_instansi.'</a>';
+                        })
                         ->addColumn('action', function($row){
                             $btn = '<button type="button" onclick="edit("'.$row->id.'")" class="btn btn-info" title="Edit"><i class="fa fa-edit"></i></button>';
                             $btn = $btn.'<button type="button" data-type="confirm" class="btn btn-danger js-sweetalert" title="Delete"><i class="fa fa-trash-o"></i></button>';

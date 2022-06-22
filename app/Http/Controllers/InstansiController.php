@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Instansi;
+use App\User;
 use Validator;
 use DataTables;
 class InstansiController extends Controller
@@ -20,8 +21,8 @@ class InstansiController extends Controller
                         })
                         ->addColumn('action', function($row){
                             $btn = '<button type="button" onclick="detail(`'.$row->id.'`)" class="btn btn-success" data-toggle="modal" title="View"><i class="fa fa-eye"></i></button>';
-                            $btn = $btn.'<button type="button" onclick="edit('.$row->id.')" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
-                            $btn = $btn.'<button type="button" onclick="hapus('.$row->id.')" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
+                            $btn = $btn.'<button type="button" onclick="edit(`'.$row->id.'`)" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
+                            $btn = $btn.'<button type="button" onclick="hapus(`'.$row->id.'`)" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
                             // $btn = '<div class="btn-group">';
                             // $btn = $btn.'<a href="#" class="btn btn-success btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-eye"></i> View</a>';
                             // $btn = $btn.'<a href="#" class="btn btn-warning btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-edit"></i> Edit</a>';
@@ -65,7 +66,9 @@ class InstansiController extends Controller
             $input = $request->all();
             $input['id'] = Str::uuid()->toString();
             $input['status_instansi'] = 1;
-
+            $user = User::where('id',auth()->user()->id)->update([
+                'instansi_id' => $input['id']
+            ]);
             if($input['logo_instansi'] != null){
                 $imageInstansi = $request->file('logo_instansi');
     
@@ -125,5 +128,96 @@ class InstansiController extends Controller
                 'logo_instansi' => $instansi->logo_instansi,
             ]
         ]);
+    }
+
+    public function edit($id)
+    {
+        $instansi = Instansi::find($id);
+        if(empty($instansi)){
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Tidak Ditemukan'
+            ]);
+        }
+        return response()->json([
+            'status' => false,
+            'data' => $instansi
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $rules = [
+            'edit_nama_instansi' => 'required',
+            'edit_nama_lembaga' => 'required',
+            'edit_alamat_instansi' => 'required',
+            'edit_nama_kepala_instansi' => 'required',
+            'edit_nip_instansi' => 'required',
+            'edit_npwp_instansi' => 'required',
+            'edit_email_instansi' => 'required',
+            'edit_telp_instansi' => 'required',
+        ];
+
+        $messages = [
+            'edit_nama_instansi.required'  => 'Instansi Wajib Diisi.',
+            'edit_nama_lembaga.required'  => 'Lembaga Wajib Diisi.',
+            'edit_alamat_instansi.required'  => 'Alamat Instansi Wajib Diisi.',
+            'edit_nama_kepala_instansi.required'  => 'Kepala Instansi Wajib Diisi.',
+            'edit_nip_instansi.required'  => 'NIP Instansi Wajib Diisi.',
+            'edit_npwp_instansi.required'  => 'NPWP Instansi Wajib Diisi.',
+            'edit_email_instansi.required'  => 'Email Instansi Wajib Diisi.',
+            'edit_telp_instansi.required'  => 'Telpon Instansi Wajib Diisi.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->passes()) {
+            // $input = $request->all();
+            // $instansi_cek = Instansi::find($request->edit_id);
+
+            $input['nama_instansi'] = $request->edit_nama_instansi;
+            $input['nama_lembaga'] = $request->edit_nama_lembaga;
+            $input['alamat_instansi'] = $request->edit_alamat_instansi;
+            $input['nama_kepala_instansi'] = $request->edit_nama_kepala_instansi;
+            $input['nip_instansi'] = $request->edit_nip_instansi;
+            $input['npwp_instansi'] = $request->edit_npwp_instansi;
+            $input['email_instansi'] = $request->edit_email_instansi;
+            $input['telp_instansi'] = $request->edit_telp_instansi;
+            $input['status_instansi'] = 1;
+            $user = User::where('id',auth()->user()->id)->update([
+                'instansi_id' => $request->edit_id
+            ]);
+            if($input['logo_instansi'] != null){
+                $imageInstansi = $request->file('edit_logo_instansi');
+    
+                $imgInstansi = \Image::make($imageInstansi->path());
+                $imgInstansi = $imgInstansi->encode('webp', 75);
+                $input['logo_instansi'] = time().'.webp';
+                $imgInstansi->save(public_path('backend_2/logo_instansi/').$input['logo_instansi']);
+            }
+            $instansi = Instansi::find($request->edit_id)->update($input);
+            // $instansi = Instansi::create($input);
+
+            if($instansi){
+                $message_title="Berhasil !";
+                $message_content="Data Instansi ".$input['nama_instansi']." Berhasil Diubah";
+                $message_type="success";
+                $message_succes = true;
+            }
+
+            $array_message = array(
+                'success' => $message_succes,
+                'message_title' => $message_title,
+                'message_content' => $message_content,
+                'message_type' => $message_type,
+            );
+            return response()->json($array_message);
+        }
+        return response()->json(
+            [
+                'success' => false,
+                'error' => $validator->errors()->all()
+            ]
+        );
     }
 }

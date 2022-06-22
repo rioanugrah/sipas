@@ -26,6 +26,7 @@
         </div>
     </div>
     @include('backend.instansi.modalView')
+    @include('backend.instansi.modalEdit')
     <div class="row clearfix">
         <div class="col-lg-12">
             <div class="card">
@@ -107,7 +108,7 @@ function detail(p) {
         contentType: "application/json;  charset=utf-8",
         cache: false,
         success: function(result){
-            document.getElementById('detail_title_instansi').innerHTML = result.data.nama_instansi;
+            document.getElementById('detail_title_instansi').innerHTML = 'Detail Instansi';
             document.getElementById('detail_instansi').innerHTML = result.data.nama_instansi;
             document.getElementById('detail_lembaga_instansi').innerHTML = result.data.nama_lembaga;
             document.getElementById('detail_alamat_instansi').innerHTML = result.data.alamat_instansi;
@@ -122,16 +123,83 @@ function detail(p) {
             }else{
                 document.getElementById('detail_status_instansi').innerHTML = '<div class="text-danger">'+result.data.status_instansi+'</div>';
             }
-            // $('#edit_id').val(result.perusahaan.id);
-            // $('#edit_nama_perusahaan').val(result.perusahaan.nama_perusahaan);
-            // $('#edit_alamat_perusahaan').val(result.perusahaan.alamat_perusahaan);
-            // $('#edit_penanggung_jawab').val(result.perusahaan.penanggung_jawab);
-            // $('#edit_jabatan').val(result.perusahaan.jabatan);
-            // $('#edit_siup').val(result.perusahaan.siup);
-            // $('#edit_npwp').val(result.perusahaan.npwp);
             $('#modalDetail').modal();
         }
     })
 }
+
+function edit(p) {
+    $.ajax({
+        type: 'GET',
+        url: "{{ url('b/instansi') }}"+'/'+p+'/edit',
+        contentType: "application/json;  charset=utf-8",
+        cache: false,
+        success: function(result){
+            document.getElementById('edit_title_instansi').innerHTML = 'Edit Data Instansi';
+            $('#edit_id').val(result.data.id);
+            $('#edit_nama_instansi').val(result.data.nama_instansi);
+            $('#edit_nama_lembaga').val(result.data.nama_lembaga);
+            $('#edit_alamat_instansi').val(result.data.alamat_instansi);
+            $('#edit_nama_kepala_instansi').val(result.data.nama_kepala_instansi);
+            $('#edit_nip_instansi').val(result.data.nip_instansi);
+            $('#edit_npwp_instansi').val(result.data.npwp_instansi);
+            $('#edit_email_instansi').val(result.data.email_instansi);
+            $('#edit_telp_instansi').val(result.data.telp_instansi);
+            $('#modalEdit').modal();
+        }
+    })
+}
+
+$('.edit-upload-form').submit(function(e) {
+    e.preventDefault();
+    // var form = $(this);
+    var formData = new FormData(this);
+    $.ajax({
+        type: 'POST',
+        url: "{{ route('instansi.update') }}",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: (result) => {
+            if (result.success == true) {
+                // swal({
+                //     title: result.message_title,
+                //     text: result.message_content,
+                //     icon: result.message_type,
+                //     padding: '2em'
+                // })
+                alert(result.message_title);
+                // toastr.success(result.message_title,'',{
+                //     positionClass: 'toast-bottom-full-width'
+                // });
+                table.ajax.reload();
+                this.reset();
+                $('#modalEdit').modal('hide');
+            } else {
+                // swal({
+                //     title: 'Gagal',
+                //     text: 'Data Gagal Disimpan',
+                //     icon: 'error',
+                //     padding: '2em'
+                // })
+                alert(result.error);
+                // toastr.error(result.error,'',{
+                //     positionClass: 'toast-top-full-width'
+                // });
+            }
+        },
+        error: function(request, status, error) {
+            // swal({
+            //     title: error,
+            //     type: 'error',
+            //     padding: '2em'
+            // })
+            alert(error);
+            // toastr.error(error,'',{
+            //     positionClass: 'toast-top-full-width'
+            // });
+        }
+    })
+});
 </script>
 @endsection

@@ -39,7 +39,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::prefix('instansi')->group(function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
             Route::get('/{id}', 'InstansiController@detail')->name('instansi.detail');
+            Route::get('/{id}/edit', 'InstansiController@edit')->name('instansi.edit');
             Route::post('/simpan', 'InstansiController@simpan')->name('instansi.simpan');
+            Route::post('/update', 'InstansiController@update')->name('instansi.update');
+        });
+        Route::prefix('klasifikasi')->group(function () {
+            Route::get('/', 'KlasifikasiController@index')->name('klasifikasi');
+            // Route::get('/{id}', 'InstansiController@detail')->name('instansi.detail');
+            // Route::post('/simpan', 'InstansiController@simpan')->name('instansi.simpan');
         });
         Route::prefix('unit_kerja')->group(function () {
             Route::get('/', 'UnitKerjaController@index')->name('unit_kerja');
