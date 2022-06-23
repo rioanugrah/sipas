@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SuratMasuk extends Model
 {
-    protected $table = 'roles';
+    protected $table = 'surat_masuk';
     protected $primaryKey = 'id';
     public $incrementing = false;
     protected $dates = ['deleted_at'];
@@ -22,6 +22,8 @@ class SuratMasuk extends Model
         'klasifikasi_id',
         'tanggal_surat',
         'tanggal_terima',
+        'status',
+        'status_surat',
         'file',
     ];
 }

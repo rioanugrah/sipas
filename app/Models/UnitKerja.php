@@ -18,4 +18,8 @@ class UnitKerja extends Model
         'unit_kerja',
         'instansi_id',
     ];
+    public function instansi()
+    {
+        return $this->belongsTo(\App\Models\Instansi::class, 'instansi_id');
+    }
 }

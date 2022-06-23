@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::prefix('surat_masuk')->group(function () {
             Route::get('/', 'SuratMasukController@index')->name('surat_masuk');
+            Route::get('/simpan', 'SuratMasukController@simpan')->name('surat_masuk.simpan');
         });
         Route::prefix('surat_keluar')->group(function () {
             Route::get('/', 'SuratKeluarController@index')->name('surat_keluar');
@@ -52,7 +53,9 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::prefix('unit_kerja')->group(function () {
             Route::get('/', 'UnitKerjaController@index')->name('unit_kerja');
+            Route::get('/{id}/edit', 'UnitKerjaController@edit')->name('unit_kerja.edit');
             Route::post('/simpan', 'UnitKerjaController@simpan')->name('unit_kerja.simpan');
+            Route::post('/update', 'UnitKerjaController@update')->name('unit_kerja.update');
         });
         Route::prefix('pengguna')->group(function () {
             Route::get('/', 'UsersController@index')->name('users');

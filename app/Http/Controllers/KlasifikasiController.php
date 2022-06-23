@@ -39,6 +39,9 @@ class KlasifikasiController extends Controller
                         ->make(true);
         }
         $data['instansi'] = Instansi::find(auth()->user()->instansi_id);
+        if(empty($data['instansi'])){
+            return redirect()->back();
+        }
         return view('backend.klasifikasi.index',$data);
     }
 

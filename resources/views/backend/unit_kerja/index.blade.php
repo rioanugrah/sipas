@@ -21,7 +21,7 @@
                 <div
                     class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
                     <div class="mb-3 mb-xl-0">
-                        <button onclick="refresh()" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
+                        <button onclick="reload()" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
                         <button onclick="add()" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
@@ -51,6 +51,8 @@
             </div>
         </div>
     </div>
+    @include('backend.unit_kerja.modalBuat')
+    @include('backend.unit_kerja.modalEdit')
 @endsection
 @section('js')
     <script src="{{ $link }}/assets/bundles/datatablescripts.bundle.js"></script>
@@ -82,6 +84,132 @@
                     searchable: false
                 },
             ]
+        });
+
+        function add() {
+            $('#modalBuat').modal();
+        }
+        function reload() {
+            table.ajax.reload();
+        }
+
+        function edit(p) {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('b/unit_kerja') }}"+'/'+p+'/edit',
+                contentType: "application/json;  charset=utf-8",
+                cache: false,
+                success: function(result) {
+                    $('#edit_id').val(result.data.id);
+                    $('#edit_unit_kerja').val(result.data.unit_kerja);
+                    $('#edit_instansi').val(result.data.instansi);
+                    $('#modalEdit').modal();
+                }
+            })
+        }
+
+        $('.upload-form').submit(function(e) {
+            e.preventDefault();
+            // var form = $(this);
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('unit_kerja.simpan') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (result) => {
+                    if (result.success == true) {
+                        // swal({
+                        //     title: result.message_title,
+                        //     text: result.message_content,
+                        //     icon: result.message_type,
+                        //     padding: '2em'
+                        // })
+                        alert(result.message_title);
+                        // toastr.success(result.message_title,'',{
+                        //     positionClass: 'toast-bottom-full-width'
+                        // });
+                        table.ajax.reload();
+                        this.reset();
+                        // $('#modalBuat').modal('hide');
+                    } else {
+                        // swal({
+                        //     title: 'Gagal',
+                        //     text: 'Data Gagal Disimpan',
+                        //     icon: 'error',
+                        //     padding: '2em'
+                        // })
+                        alert(result.error);
+                        // toastr.error(result.error,'',{
+                        //     positionClass: 'toast-top-full-width'
+                        // });
+                    }
+                },
+                error: function(request, status, error) {
+                    // swal({
+                    //     title: error,
+                    //     type: 'error',
+                    //     padding: '2em'
+                    // })
+                    alert(error);
+                    // toastr.error(error,'',{
+                    //     positionClass: 'toast-top-full-width'
+                    // });
+                }
+            })
+        });
+
+        $('.edit-upload-form').submit(function(e) {
+            e.preventDefault();
+            // var form = $(this);
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('unit_kerja.update') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (result) => {
+                    if (result.success == true) {
+                        // swal({
+                        //     title: result.message_title,
+                        //     text: result.message_content,
+                        //     icon: result.message_type,
+                        //     padding: '2em'
+                        // })
+                        alert(result.message_title);
+                        // toastr.success(result.message_title,'',{
+                        //     positionClass: 'toast-bottom-full-width'
+                        // });
+                        table.ajax.reload();
+                        this.reset();
+                        $('#modalEdit').modal('hide');
+                    } else {
+                        // swal({
+                        //     title: 'Gagal',
+                        //     text: 'Data Gagal Disimpan',
+                        //     icon: 'error',
+                        //     padding: '2em'
+                        // })
+                        alert(result.error);
+                        // toastr.error(result.error,'',{
+                        //     positionClass: 'toast-top-full-width'
+                        // });
+                    }
+                },
+                error: function(request, status, error) {
+                    // swal({
+                    //     title: error,
+                    //     type: 'error',
+                    //     padding: '2em'
+                    // })
+                    alert(error);
+                    // toastr.error(error,'',{
+                    //     positionClass: 'toast-top-full-width'
+                    // });
+                }
+            })
         });
     </script>
 @endsection
