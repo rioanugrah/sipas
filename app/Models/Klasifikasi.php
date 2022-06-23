@@ -20,4 +20,9 @@ class Klasifikasi extends Model
         'keterangan',
         'instansi_id',
     ];
+
+    public function instansi()
+    {
+        return $this->belongsTo(\App\Models\Instansi::class, 'instansi_id');
+    }
 }

@@ -13,25 +13,29 @@ class InstansiController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Instansi::all();
-                return DataTables::of($data)
-                        ->addIndexColumn()
-                        ->addColumn('nama_instansi', function($row){
-                            return '<a href="javascript:void()" onclick="detail(`'.$row->id.'`)">'.$row->nama_instansi.'</a>';
-                        })
-                        ->addColumn('action', function($row){
-                            $btn = '<button type="button" onclick="detail(`'.$row->id.'`)" class="btn btn-success" data-toggle="modal" title="View"><i class="fa fa-eye"></i></button>';
-                            $btn = $btn.'<button type="button" onclick="edit(`'.$row->id.'`)" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
-                            $btn = $btn.'<button type="button" onclick="hapus(`'.$row->id.'`)" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
-                            // $btn = '<div class="btn-group">';
-                            // $btn = $btn.'<a href="#" class="btn btn-success btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-eye"></i> View</a>';
-                            // $btn = $btn.'<a href="#" class="btn btn-warning btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-edit"></i> Edit</a>';
-                            // $btn = $btn.'<a href="#" class="btn btn-danger btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-trash"></i> Delete</a>';
-                            // $btn = $btn.'</div>';
-                            return $btn;
-                        })
-                        ->rawColumns(['action','nama_instansi'])
-                        ->make(true);
+            if(auth()->user()->is_role == 1){
+                $data = Instansi::all();
+            }else{
+                $data = Instansi::where('id',auth()->user()->instansi_id)->get();
+            }
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('nama_instansi', function($row){
+                        return '<a href="javascript:void()" onclick="detail(`'.$row->id.'`)">'.$row->nama_instansi.'</a>';
+                    })
+                    ->addColumn('action', function($row){
+                        $btn = '<button type="button" onclick="detail(`'.$row->id.'`)" class="btn btn-success" data-toggle="modal" title="View"><i class="fa fa-eye"></i></button>';
+                        $btn = $btn.'<button type="button" onclick="edit(`'.$row->id.'`)" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
+                        $btn = $btn.'<button type="button" onclick="hapus(`'.$row->id.'`)" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
+                        // $btn = '<div class="btn-group">';
+                        // $btn = $btn.'<a href="#" class="btn btn-success btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-eye"></i> View</a>';
+                        // $btn = $btn.'<a href="#" class="btn btn-warning btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-edit"></i> Edit</a>';
+                        // $btn = $btn.'<a href="#" class="btn btn-danger btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fas fa-trash"></i> Delete</a>';
+                        // $btn = $btn.'</div>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action','nama_instansi'])
+                    ->make(true);
         }
         return view('backend.instansi.index');
     }
@@ -75,7 +79,7 @@ class InstansiController extends Controller
                 $imgInstansi = \Image::make($imageInstansi->path());
                 $imgInstansi = $imgInstansi->encode('webp', 75);
                 $input['logo_instansi'] = time().'.webp';
-                $imgInstansi->save(public_path('backend_2/logo_instansi/').$input['logo_instansi']);
+                $imgInstansi->save(public_path('backend_4/logo_instansi/').$input['logo_instansi']);
             }
             
             $instansi = Instansi::create($input);
@@ -125,7 +129,7 @@ class InstansiController extends Controller
                 'npwp_instansi' => $instansi->npwp_instansi,
                 'email_instansi' => $instansi->email_instansi,
                 'telp_instansi' => $instansi->telp_instansi,
-                'logo_instansi' => $instansi->logo_instansi,
+                'logo_instansi' => asset('backend_4/logo_instansi/'.$instansi->logo_instansi),
             ]
         ]);
     }
@@ -173,7 +177,7 @@ class InstansiController extends Controller
 
         if ($validator->passes()) {
             // $input = $request->all();
-            // $instansi_cek = Instansi::find($request->edit_id);
+            $instansi = Instansi::find($request->edit_id);
 
             $input['nama_instansi'] = $request->edit_nama_instansi;
             $input['nama_lembaga'] = $request->edit_nama_lembaga;
@@ -187,16 +191,17 @@ class InstansiController extends Controller
             $user = User::where('id',auth()->user()->id)->update([
                 'instansi_id' => $request->edit_id
             ]);
-            if($input['logo_instansi'] != null){
+            if($request->edit_logo_instansi != null){
                 $imageInstansi = $request->file('edit_logo_instansi');
     
                 $imgInstansi = \Image::make($imageInstansi->path());
                 $imgInstansi = $imgInstansi->encode('webp', 75);
                 $input['logo_instansi'] = time().'.webp';
-                $imgInstansi->save(public_path('backend_2/logo_instansi/').$input['logo_instansi']);
+                $imgInstansi->save(public_path('backend_4/logo_instansi/').$input['logo_instansi']);
+            }else{
+                $input['logo_instansi'] = $instansi->logo_instansi;
             }
-            $instansi = Instansi::find($request->edit_id)->update($input);
-            // $instansi = Instansi::create($input);
+            $instansi->update($input);
 
             if($instansi){
                 $message_title="Berhasil !";

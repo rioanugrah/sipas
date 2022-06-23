@@ -18,15 +18,14 @@
             <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
                 <div class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
                     <div class="mb-3 mb-xl-0">
-                        <button onclick="refresh()" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
+                        <button onclick="reload()" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
                         <button onclick="add()" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @include('backend.instansi.modalView')
-    @include('backend.instansi.modalEdit')
+    
     <div class="row clearfix">
         <div class="col-lg-12">
             <div class="card">
@@ -52,6 +51,9 @@
             </div>
         </div>
     </div>
+    @include('backend.instansi.modalBuat')
+    @include('backend.instansi.modalView')
+    @include('backend.instansi.modalEdit')
 @endsection
 
 @section('js')
@@ -99,6 +101,14 @@ var table = $('.instansi').DataTable({
     ]
 });
 
+function add() {
+    $('#modalBuat').modal();
+}
+
+function reload() {
+    table.ajax.reload();
+}
+
 function detail(p) {
     // alert(p);
     // $('#modalDetail').modal();
@@ -117,7 +127,7 @@ function detail(p) {
             document.getElementById('detail_npwp_instansi').innerHTML = result.data.npwp_instansi;
             document.getElementById('detail_email_instansi').innerHTML = result.data.email_instansi;
             document.getElementById('detail_telp_instansi').innerHTML = result.data.telp_instansi;
-            document.getElementById('detail_logo_instansi').innerHTML = result.data.logo_instansi;
+            document.getElementById('detail_logo_instansi').innerHTML = '<img src="'+result.data.logo_instansi+'" width="150">';
             if(result.data.status_instansi == 'Active'){
                 document.getElementById('detail_status_instansi').innerHTML = '<div class="text-success">'+result.data.status_instansi+'</div>';
             }else{
@@ -149,6 +159,58 @@ function edit(p) {
         }
     })
 }
+
+$('.upload-form').submit(function(e) {
+    e.preventDefault();
+    // var form = $(this);
+    var formData = new FormData(this);
+    $.ajax({
+        type: 'POST',
+        url: "{{ route('instansi.simpan') }}",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: (result) => {
+            if (result.success == true) {
+                // swal({
+                //     title: result.message_title,
+                //     text: result.message_content,
+                //     icon: result.message_type,
+                //     padding: '2em'
+                // })
+                alert(result.message_title);
+                // toastr.success(result.message_title,'',{
+                //     positionClass: 'toast-bottom-full-width'
+                // });
+                table.ajax.reload();
+                this.reset();
+                $('#modalBuat').modal('hide');
+            } else {
+                // swal({
+                //     title: 'Gagal',
+                //     text: 'Data Gagal Disimpan',
+                //     icon: 'error',
+                //     padding: '2em'
+                // })
+                alert(result.error);
+                // toastr.error(result.error,'',{
+                //     positionClass: 'toast-top-full-width'
+                // });
+            }
+        },
+        error: function(request, status, error) {
+            // swal({
+            //     title: error,
+            //     type: 'error',
+            //     padding: '2em'
+            // })
+            alert(error);
+            // toastr.error(error,'',{
+            //     positionClass: 'toast-top-full-width'
+            // });
+        }
+    })
+});
 
 $('.edit-upload-form').submit(function(e) {
     e.preventDefault();

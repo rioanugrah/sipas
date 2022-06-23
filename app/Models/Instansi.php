@@ -24,5 +24,6 @@ class Instansi extends Model
         'npwp_instansi',
         'email_instansi',
         'telp_instansi',
+        'logo_instansi'
     ];
 }
