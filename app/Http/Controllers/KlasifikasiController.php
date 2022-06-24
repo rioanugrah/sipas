@@ -38,11 +38,15 @@ class KlasifikasiController extends Controller
                         ->rawColumns(['action'])
                         ->make(true);
         }
-        $data['instansi'] = Instansi::find(auth()->user()->instansi_id);
-        if(empty($data['instansi'])){
-            return redirect()->back();
+        if(auth()->user()->is_role == 1){
+            return view('backend.klasifikasi.administrator');
+        }else{
+            $data['instansi'] = Instansi::find(auth()->user()->instansi_id);
+            if(empty($data['instansi'])){
+                return redirect()->back();
+            }
+            return view('backend.klasifikasi.index',$data);
         }
-        return view('backend.klasifikasi.index',$data);
     }
 
     public function simpan(Request $request)

@@ -14,7 +14,11 @@ class UnitKerjaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = UnitKerja::all();
+            if(auth()->user()->is_role == 1){
+                $data = UnitKerja::all();
+            }else{
+                $data = UnitKerja::where('instansi_id',auth()->user()->instansi_id)->get();
+            }
                 return DataTables::of($data)
                         ->addIndexColumn()
                         ->addColumn('instansi', function($row){
@@ -34,12 +38,16 @@ class UnitKerjaController extends Controller
                         ->rawColumns(['action'])
                         ->make(true);
         }
-        $data['instansi'] = Instansi::find(auth()->user()->instansi_id);
-        $data['user'] = User::where('instansi_id',auth()->user()->instansi_id)->get();
-        if(empty($data['instansi'])){
-            return redirect()->back();
+        if(auth()->user()->is_role == 1){
+            return view('backend.unit_kerja.administrator');
+        }else{
+            $data['instansi'] = Instansi::find(auth()->user()->instansi_id);
+            $data['user'] = User::where('instansi_id',auth()->user()->instansi_id)->get();
+            if(empty($data['instansi'])){
+                return redirect()->back();
+            }
+            return view('backend.unit_kerja.index',$data);
         }
-        return view('backend.unit_kerja.index',$data);
     }
 
     public function simpan(Request $request)

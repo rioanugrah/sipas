@@ -18,13 +18,7 @@
                 <h1>Surat Masuk</h1>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
-                <div
-                    class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
-                    <div class="mb-3 mb-xl-0">
-                        <button onclick="reload()" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
-                        <button onclick="add()" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -55,7 +49,6 @@
             </div>
         </div>
     </div>
-    @include('backend.surat_masuk.modalBuat')
 @endsection
 @section('js')
     <script src="{{ $link }}/assets/bundles/datatablescripts.bundle.js"></script>

@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label>Asal Surat</label>
-                    <input type="text" class="form-control" placeholder="Asal Surat" value="{{ auth()->user()->instansi->nama_instansi }}" readonly>
+                    <input type="text" class="form-control" placeholder="Asal Surat" value="{{ $instansi }}" readonly>
                 </div>
                 <div class="form-group">
                     <label>Sifat Surat</label>

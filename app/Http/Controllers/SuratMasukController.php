@@ -36,8 +36,18 @@ class SuratMasukController extends Controller
                         ->rawColumns(['action'])
                         ->make(true);
         }
-        $data['klasifikasis'] = Klasifikasi::where('instansi_id',auth()->user()->instansi_id)->get();
-        return view('backend.surat_masuk.index',$data);
+        if(auth()->user()->is_role == 1){
+            return view('backend.surat_masuk.administrator');
+        }else{
+            if(auth()->user()->instansi_id == null){
+                $data['instansi'] = null;
+                // return view('backend.surat_masuk.administrator');
+            }else{
+                $data['instansi'] = auth()->user()->instansi->nama_instansi;
+            }
+            $data['klasifikasis'] = Klasifikasi::where('instansi_id',auth()->user()->instansi_id)->get();
+            return view('backend.surat_masuk.index',$data);
+        }
     }
 
     public function simpan(Request $request)

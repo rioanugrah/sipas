@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::prefix('pengguna')->group(function () {
             Route::get('/', 'UsersController@index')->name('users');
+            Route::post('/simpan', 'UsersController@simpan')->name('users.simpan');
             Route::get('/{id}', 'UsersController@index_user')->name('index.user');
         });
     });
