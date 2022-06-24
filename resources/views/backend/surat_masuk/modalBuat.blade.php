@@ -8,8 +8,51 @@
             @csrf
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Nomor Surat</label>
+                    <label>No. Surat</label>
                     <input type="text" name="nomor_surat_masuk" class="form-control" placeholder="Nomor Surat">
+                </div>
+                <div class="form-group">
+                    <label>No. Agenda</label>
+                    <input type="text" name="nomor_agenda_surat_masuk" class="form-control" placeholder="Nomor Agenda Surat">
+                </div>
+                <div class="form-group">
+                    <label>Tanggal Surat</label>
+                    <input type="date" name="tanggal_surat" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Asal Surat</label>
+                    <input type="text" class="form-control" placeholder="Asal Surat" value="{{ auth()->user()->instansi->nama_instansi }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sifat Surat</label>
+                    <select name="status_surat" class="form-control" id="">
+                        <option>-- Sifat Surat --</option>
+                        <option value="1">Segera</option>
+                        <option value="2">Penting</option>
+                        <option value="3">Rahasia</option>
+                        <option value="4">Biasa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Isi Ringkasan</label>
+                    <input type="text" name="isi_ringkasan" class="form-control" placeholder="Isi Ringkasan">
+                </div>
+                <div class="form-group">
+                    <label>Keterangan</label>
+                    <input type="text" name="keterangan" class="form-control" placeholder="Keterangan">
+                </div>
+                <div class="form-group">
+                    <label>Jenis Klasifikasi</label>
+                    <select name="klasifikasi_id" class="form-control" id="">
+                        <option>-- Pilih Klasifikasi --</option>
+                        @foreach ($klasifikasis as $kf)
+                        <option value="{{ $kf->id }}">{{ $kf->kode_klasifikasi }} - {{ $kf->judul_klasifikasi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Upload Berkas</label>
+                    <input type="file" name="file" class="form-control">
                 </div>
             </div>
             <div class="modal-footer">

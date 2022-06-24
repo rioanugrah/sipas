@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Instansi;
 use App\Models\SuratMasuk;
+use App\Models\Klasifikasi;
 use \Carbon\Carbon;
 use Validator;
 use DataTables;
+use DB;
 class SuratMasukController extends Controller
 {
     public function index(Request $request)
@@ -34,27 +36,24 @@ class SuratMasukController extends Controller
                         ->rawColumns(['action'])
                         ->make(true);
         }
-        return view('backend.surat_masuk.index');
+        $data['klasifikasis'] = Klasifikasi::where('instansi_id',auth()->user()->instansi_id)->get();
+        return view('backend.surat_masuk.index',$data);
     }
 
     public function simpan(Request $request)
     {
         $rules = [
             'nomor_surat_masuk' => 'required',
-            'asal_surat' => 'required',
             'isi_ringkasan' => 'required',
             'keterangan' => 'required',
             'tanggal_surat' => 'required',
-            'tanggal_terima' => 'required',
         ];
 
         $messages = [
             'nomor_surat_masuk.required'  => 'Unit Kerja Wajib Diisi.',
-            'asal_surat.required'  => 'Unit Kerja Wajib Diisi.',
             'isi_ringkasan.required'  => 'Unit Kerja Wajib Diisi.',
             'keterangan.required'  => 'Unit Kerja Wajib Diisi.',
             'tanggal_surat.required'  => 'Unit Kerja Wajib Diisi.',
-            'tanggal_terima.required'  => 'Unit Kerja Wajib Diisi.',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

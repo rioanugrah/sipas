@@ -21,6 +21,18 @@ class UsersController extends Controller
                             // echo json_encode($row->id);
                             return Str::slug($row->id);
                         })
+                        ->addColumn('instansi', function($row){
+                            // echo json_encode($row->id);
+                            return $row->instansi->nama_instansi;
+                        })
+                        ->addColumn('unit_kerja', function($row){
+                            // echo json_encode($row->id);
+                            if($row->unit_kerja_id == null){
+                                return '-';
+                            }else{
+                                return $row->unit_kerja_id;
+                            }
+                        })
                         ->addColumn('action', function($row){
                             $btn = '<div class="btn-group">';
                             $btn = $btn.'<a href="#" class="btn btn-success btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fa fa-eye"></i> View</a>';

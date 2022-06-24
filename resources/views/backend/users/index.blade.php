@@ -33,6 +33,8 @@
                                 <tr>
                                     <th>User</th>
                                     <th>Email</th>
+                                    <th>Instansi</th>
+                                    <th>Unit Kerja</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -67,6 +69,14 @@
             {
                 data: 'email',
                 name: 'email'
+            },
+            {
+                data: 'instansi',
+                name: 'instansi'
+            },
+            {
+                data: 'unit_kerja',
+                name: 'unit_kerja'
             },
             {
                 data: 'action',

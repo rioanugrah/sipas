@@ -42,4 +42,9 @@ class User extends Authenticatable
         return $this->belongsTo(\App\Models\Roles::class, 'is_role');
     }
 
+    public function instansi()
+    {
+        return $this->belongsTo(\App\Models\Instansi::class, 'instansi_id');
+    }
+
 }

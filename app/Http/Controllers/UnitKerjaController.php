@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Instansi;
 use App\Models\UnitKerja;
+use App\User;
 use Validator;
 use DataTables;
 class UnitKerjaController extends Controller
@@ -34,6 +35,7 @@ class UnitKerjaController extends Controller
                         ->make(true);
         }
         $data['instansi'] = Instansi::find(auth()->user()->instansi_id);
+        $data['user'] = User::where('instansi_id',auth()->user()->instansi_id)->get();
         if(empty($data['instansi'])){
             return redirect()->back();
         }
