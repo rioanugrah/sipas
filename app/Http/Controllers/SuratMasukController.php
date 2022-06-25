@@ -16,7 +16,11 @@ class SuratMasukController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = SuratMasuk::all();
+            if(auth()->user()->is_role == 1){
+                $data = SuratMasuk::all();
+            }else{
+                $data = SuratMasuk::where('user_pengirim_id','!=',auth()->user()->id)->get();
+            }
                 return DataTables::of($data)
                         ->addIndexColumn()
                         ->addColumn('sifat_surat', function($row){
@@ -71,7 +75,7 @@ class SuratMasukController extends Controller
         if ($validator->passes()) {
             $input = $request->all();
             $input['id'] = Str::uuid()->toString();
-            $input['status'] = 'Open';
+            $input['status'] = 'Close';
             $input['status_surat'] = '1';
             $input['asal_surat'] = auth()->user()->instansi_id;
             $suratMasuk = SuratMasuk::create($input);

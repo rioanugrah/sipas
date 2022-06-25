@@ -15,6 +15,7 @@
             <div class="col-lg-4 col-md-12 col-sm-12">
                 <h1>@yield('title')</h1>
             </div>
+            @if (auth()->user()->instansi_id == null)
             <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
                 <div class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
                     <div class="mb-3 mb-xl-0">
@@ -23,6 +24,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
     

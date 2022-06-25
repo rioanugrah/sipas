@@ -32,8 +32,8 @@
                 <li><a href="{{ route('klasifikasi') }}"><i class="fa fa-envelope"></i> <span>Data Klasifikasi</span></a></li>
                 <li><a href="{{ route('unit_kerja') }}"><i class="fa fa-envelope"></i><span>Unit Kerja</span></a></li>
                 <li class="header">Surat</li>
-                <li><a href="{{ route('surat_masuk') }}"><i class="fa fa-envelope"></i> <span>Surat Masuk</span></a></li>
-                <li><a href="{{ route('surat_keluar') }}"><i class="fa fa-envelope"></i> <span>Surat Keluar</span></a></li>
+                <li><a href="{{ route('surat_masuk') }}"><i class="fa fa-envelope"></i> <span>Masuk</span></a></li>
+                <li><a href="{{ route('surat_keluar') }}"><i class="fa fa-envelope"></i> <span>Keluar</span></a></li>
                 <li class="header">User Management</li>
                 <li><a href="#"><i class="fa fa-envelope"></i> <span>Roles</span></a></li>
                 <li><a href="{{ route('users') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>

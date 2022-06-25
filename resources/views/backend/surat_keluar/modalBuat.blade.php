@@ -11,13 +11,13 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label>No. Surat</label>
-                            <input type="text" name="nomor_surat_masuk" class="form-control" placeholder="Nomor Surat">
+                            <input type="text" name="nomor_surat_keluar" class="form-control" placeholder="Nomor Surat">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label>No. Agenda</label>
-                            <input type="text" name="nomor_agenda_surat_masuk" class="form-control" placeholder="Nomor Agenda Surat" style="width: 55%">
+                            <input type="text" name="nomor_agenda_surat_keluar" class="form-control" placeholder="Nomor Agenda Surat" style="width: 55%">
                         </div>
                     </div>
                     <div class="col-6">
@@ -32,6 +32,17 @@
                             <input type="text" class="form-control" placeholder="Asal Surat" value="{{ $instansi }}" readonly>
                         </div>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label>Tujuan Surat</label>
+                    <select name="tujuan_surat" class="form-control" id="">
+                        <option>-- Tujuan Surat --</option>
+                        @forelse ($unit_kerjas as $uk)
+                        <option value="{{ $uk->id }}">{{ $uk->unit_kerja }}</option>
+                        @empty
+                        <option>Data Tidak Tersedia</option>
+                        @endforelse
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Sifat Surat</label>

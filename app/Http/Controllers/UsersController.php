@@ -58,11 +58,57 @@ class UsersController extends Controller
             }
             if (auth()->user()->instansi_id != null) {
                 $data['instansi'] = auth()->user()->instansi->nama_instansi;
-            }else{
+            }
+            else{
                 $data['instansi'] = null;
             }
             return view('backend.users.index',$data);
-        }else{
+        }elseif(auth()->user()->is_role == 2){
+            if ($request->ajax()) {
+                $data = User::where('instansi_id',auth()->user()->instansi_id)->get();
+                return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('id_user', function($row){
+                            // echo json_encode($row->id);
+                            return Str::slug($row->id);
+                        })
+                        ->addColumn('instansi', function($row){
+                            // echo json_encode($row->id);
+                            if($row->instansi_id == null){
+                                return '-';
+                            }
+                            return $row->instansi->nama_instansi;
+                        })
+                        ->addColumn('unit_kerja', function($row){
+                            // echo json_encode($row->id);
+                            if($row->unit_kerja_id == null){
+                                return '-';
+                            }else{
+                                return $row->unit_kerja_id;
+                            }
+                        })
+                        ->addColumn('action', function($row){
+                            $btn = '<div class="btn-group">';
+                            $btn = $btn.'<a href="#" class="btn btn-success btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fa fa-eye"></i> View</a>';
+                            $btn = $btn.'<a href="#" class="btn btn-warning btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fa fa-edit"></i> Edit</a>';
+                            $btn = $btn.'<a href="#" class="btn btn-danger btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"><i class="fa fa-trash"></i> Delete</a>';
+                            $btn = $btn.'</div>';
+                            return $btn;
+                        })
+                        ->rawColumns(['action','id_user'])
+                        ->make(true);
+            }
+            $data['unit_kerja'] = UnitKerja::where('instansi_id',auth()->user()->instansi_id)->get();
+            $data['roles'] = Roles::where('id','>',2)->get();
+            if (auth()->user()->instansi_id != null) {
+                $data['instansi'] = auth()->user()->instansi->nama_instansi;
+            }
+            else{
+                $data['instansi'] = null;
+            }
+            return view('backend.users.index',$data);
+        }
+        else{
             $user = User::find(auth()->user()->id);
             return redirect(route('index.user', ['id' => $user->id]));
         }

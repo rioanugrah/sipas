@@ -1,6 +1,6 @@
 @extends('layouts.backend_4.master1')
 @section('title')
-    Surat Masuk
+    Surat Keluar
 @endsection
 <?php $link = asset('backend_4/'); ?>
 @section('css')
@@ -15,14 +15,14 @@
     <div class="block-header">
         <div class="row clearfix">
             <div class="col-lg-4 col-md-12 col-sm-12">
-                <h1>Surat Masuk</h1>
+                <h1>@yield('title')</h1>
             </div>
             <div class="col-lg-8 col-md-12 col-sm-12 text-lg-right">
                 <div
                     class="d-flex align-items-center justify-content-md-end mt-4 mt-md-0 flex-wrap vivify pullUp delay-550">
                     <div class="mb-3 mb-xl-0">
                         <button onclick="reload()" class="btn btn-default"><i class="fa fa-refresh"></i> Reload</button>
-                        {{-- <button onclick="add()" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button> --}}
+                        <button onclick="add()" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
@@ -32,19 +32,17 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="header">
-                    <h2>Surat Masuk</h2>
+                    <h2>@yield('title')</h2>
                 </div>
                 <div class="body">
                     <div class="table-responsive">
-                        <table class="table table-hover surat_masuk dataTable table-custom spacing5">
+                        <table class="table table-hover surat_keluar dataTable table-custom spacing5">
                             <thead>
                                 <tr>
                                     <th>Tanggal</th>
                                     <th>Nomor Surat</th>
                                     <th>Nomor Agenda</th>
                                     <th>Sifat Surat</th>
-                                    <th>Pengirim</th>
-                                    <th>Disposisi Saat Ini</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -55,7 +53,7 @@
             </div>
         </div>
     </div>
-    @include('backend.surat_masuk.modalBuat')
+    @include('backend.surat_keluar.modalBuat')
 @endsection
 @section('js')
     <script src="{{ $link }}/assets/bundles/datatablescripts.bundle.js"></script>
@@ -67,33 +65,25 @@
     <script src="{{ $link }}/assets/vendor/sweetalert/sweetalert.min.js"></script>
     <script src="{{ $link }}/js/pages/tables/jquery-datatable.js"></script>
     <script>
-        var table = $('.surat_masuk').DataTable({
+        var table = $('.surat_keluar').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('surat_masuk') }}",
+            ajax: "{{ route('surat_keluar') }}",
             columns: [{
-                    data: 'created_at',
-                    name: 'created_at'
+                    data: 'tanggal_surat',
+                    name: 'tanggal_surat'
                 },
                 {
-                    data: 'nomor_surat_masuk',
-                    name: 'nomor_surat_masuk'
+                    data: 'nomor_surat_keluar',
+                    name: 'nomor_surat_keluar'
                 },
                 {
-                    data: 'nomor_agenda_surat_masuk',
-                    name: 'nomor_agenda_surat_masuk'
+                    data: 'nomor_agenda_surat_keluar',
+                    name: 'nomor_agenda_surat_keluar'
                 },
                 {
                     data: 'sifat_surat',
                     name: 'sifat_surat'
-                },
-                {
-                    data: 'pengirim',
-                    name: 'pengirim'
-                },
-                {
-                    data: 'disposisi',
-                    name: 'disposisi'
                 },
                 {
                     data: 'action',
@@ -107,6 +97,61 @@
         function add() {
             $('#modalBuat').modal();
         }
+        function reload() {
+            table.ajax.reload();
+        }
+
+        $('.upload-form').submit(function(e) {
+            e.preventDefault();
+            // var form = $(this);
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('surat_keluar.simpan') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (result) => {
+                    if (result.success == true) {
+                        // swal({
+                        //     title: result.message_title,
+                        //     text: result.message_content,
+                        //     icon: result.message_type,
+                        //     padding: '2em'
+                        // })
+                        alert(result.message_title);
+                        // toastr.success(result.message_title,'',{
+                        //     positionClass: 'toast-bottom-full-width'
+                        // });
+                        table.ajax.reload();
+                        this.reset();
+                        // $('#modalBuat').modal('hide');
+                    } else {
+                        // swal({
+                        //     title: 'Gagal',
+                        //     text: 'Data Gagal Disimpan',
+                        //     icon: 'error',
+                        //     padding: '2em'
+                        // })
+                        alert(result.error);
+                        // toastr.error(result.error,'',{
+                        //     positionClass: 'toast-top-full-width'
+                        // });
+                    }
+                },
+                error: function(request, status, error) {
+                    // swal({
+                    //     title: error,
+                    //     type: 'error',
+                    //     padding: '2em'
+                    // })
+                    alert(error);
+                    // toastr.error(error,'',{
+                    //     positionClass: 'toast-top-full-width'
+                    // });
+                }
+            })
+        });
         
     </script>
 @endsection

@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::prefix('surat_keluar')->group(function () {
             Route::get('/', 'SuratKeluarController@index')->name('surat_keluar');
+            Route::get('/page/{id}', 'SuratKeluarController@page')->name('surat_keluar.pages');
+            Route::post('/simpan', 'SuratKeluarController@simpan')->name('surat_keluar.simpan');
         });
         Route::prefix('instansi')->group(function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
