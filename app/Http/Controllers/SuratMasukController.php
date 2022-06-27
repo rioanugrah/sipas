@@ -19,12 +19,33 @@ class SuratMasukController extends Controller
             if(auth()->user()->is_role == 1){
                 $data = SuratMasuk::all();
             }else{
-                $data = SuratMasuk::where('user_pengirim_id','!=',auth()->user()->id)->get();
+                $data = SuratMasuk::where('user_pengirim_id','!=',auth()->user()->id)
+                                    ->where('unit_kerja_id',auth()->user()->unit_kerja_id)
+                                    ->get();
             }
                 return DataTables::of($data)
                         ->addIndexColumn()
                         ->addColumn('sifat_surat', function($row){
-                            return '-';
+                            if ($row->status_surat == 1) {
+                                return 'Segera';
+                            }
+                            elseif ($row->status_surat == 2) {
+                                return 'Penting';
+                            }
+                            elseif ($row->status_surat == 3) {
+                                return 'Rahasia';
+                            }
+                            elseif ($row->status_surat == 4) {
+                                return 'Biasa';
+                            }
+                        })
+                        ->addColumn('tanggal_surat', function($row){
+                            // return '-';
+                            return Carbon::parse($row->tanggal_surat)->isoFormat('LL');
+                        })
+                        ->addColumn('nomor_surat_masuk', function($row){
+                            return '<a href="'.route('surat_masuk.pages',['id' => $row->id]).'">'.$row->nomor_surat_masuk.'</a>';
+                            // return Carbon::parse($row->tanggal_surat)->isoFormat('LL');
                         })
                         ->addColumn('pengirim', function($row){
                             return '-';
@@ -37,7 +58,7 @@ class SuratMasukController extends Controller
                             $btn = $btn.'<button type="button" data-type="confirm" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
                             return $btn;
                         })
-                        ->rawColumns(['action'])
+                        ->rawColumns(['action','nomor_surat_masuk'])
                         ->make(true);
         }
         if(auth()->user()->is_role == 1){
@@ -101,5 +122,14 @@ class SuratMasukController extends Controller
                 'error' => $validator->errors()->all()
             ]
         );
+    }
+
+    public function page($id)
+    {
+        $surat_masuk = SuratMasuk::find($id);
+        // if (empty($surat_Keluar)) {
+        //     return redirect()->back();
+        // }
+        return view('backend.surat_masuk.view',compact('surat_masuk'));
     }
 }

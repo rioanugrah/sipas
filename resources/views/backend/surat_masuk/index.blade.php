@@ -72,8 +72,8 @@
             serverSide: true,
             ajax: "{{ route('surat_masuk') }}",
             columns: [{
-                    data: 'created_at',
-                    name: 'created_at'
+                    data: 'tanggal_surat',
+                    name: 'tanggal_surat'
                 },
                 {
                     data: 'nomor_surat_masuk',

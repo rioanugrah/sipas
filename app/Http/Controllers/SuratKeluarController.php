@@ -115,14 +115,16 @@ class SuratKeluarController extends Controller
             if ($request->hasFile('file')) {
                 $destinationPath = public_path('backend_4/berkas/');
                 $files = $request->file('file'); // will get all files
-                $file_name = $files->getClientOriginalName(); //Get file original name
+                $file_name = time().' - '.$files->getClientOriginalName(); //Get file original name
+                $input['file'] = $file_name;
                 $files->move($destinationPath , $file_name); // move files to destination folder
             }
             $suratKeluar = SuratKeluar::create($input);
 
             // Input Surat Masuk
             $input2['id'] = Str::uuid()->toString();
-            $input2['user_pengirim_id'] = $input['user_pengirim_id'];
+            $input2['user_pengirim_id'] = auth()->user()->id;
+            $input2['unit_kerja_id'] = $request->tujuan_surat;
             $input2['nomor_surat_masuk'] = $request->nomor_surat_keluar;
             $input2['nomor_agenda_surat_masuk'] = $request->nomor_agenda_surat_keluar;
             $input2['asal_surat'] = auth()->user()->instansi_id;
@@ -132,7 +134,7 @@ class SuratKeluarController extends Controller
             $input2['status_surat'] = $request->status_surat;
             $input2['keterangan'] = $request->keterangan;
             $input2['status'] = 'Close';
-            $input2['file'] = $files;
+            $input2['file'] = $file_name;
             $suratMasuk = SuratMasuk::create($input2);
 
             if($suratKeluar){

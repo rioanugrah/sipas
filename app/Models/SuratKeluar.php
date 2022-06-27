@@ -21,6 +21,7 @@ class SuratKeluar extends Model
         'isi_ringkasan',
         'keterangan',
         'klasifikasi_id',
+        'instansi_id',
         'tanggal_surat',
         'tanggal_terima',
         'status',

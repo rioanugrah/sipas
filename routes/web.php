@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::prefix('surat_masuk')->group(function () {
             Route::get('/', 'SuratMasukController@index')->name('surat_masuk');
+            Route::get('/page/{id}', 'SuratMasukController@page')->name('surat_masuk.pages');
             Route::get('/simpan', 'SuratMasukController@simpan')->name('surat_masuk.simpan');
         });
         Route::prefix('surat_keluar')->group(function () {

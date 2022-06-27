@@ -14,12 +14,15 @@ class SuratMasuk extends Model
 
     public $fillable = [
         'id',
+        'user_pengirim_id',
+        'unit_kerja_id',
         'nomor_surat_masuk',
         'nomor_agenda_surat_masuk',
         'asal_surat',
         'isi_ringkasan',
         'keterangan',
         'klasifikasi_id',
+        'instansi_id',
         'tanggal_surat',
         'tanggal_terima',
         'status',

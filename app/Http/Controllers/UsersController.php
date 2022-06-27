@@ -151,9 +151,14 @@ class UsersController extends Controller
 
             if($request->unit_kerja_id == null){
                 $input['unit_kerja_id'] = null;
+            }else{
+                $input['unit_kerja_id'] = $request->unit_kerja_id;
             }
+
             if($request->is_role == null){
                 $input['is_role'] = null;
+            }else{
+                $input['is_role'] = $request->is_role;
             }
             
             $input['password'] = Hash::make('user1234');

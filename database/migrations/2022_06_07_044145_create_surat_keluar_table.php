@@ -23,6 +23,7 @@ class CreateSuratKeluarTable extends Migration
             $table->string('isi_ringkasan');
             $table->string('keterangan');
             $table->uuid('klasifikasi_id');
+            // $table->uuid('instansi_id');
             $table->date('tanggal_surat');
             $table->date('tanggal_terima')->nullable();
             $table->enum('status',['Open','Close']);
