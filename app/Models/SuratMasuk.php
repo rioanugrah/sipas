@@ -29,4 +29,13 @@ class SuratMasuk extends Model
         'status_surat',
         'file',
     ];
+
+    public function instansi()
+    {
+        return $this->belongsTo(\App\Models\Instansi::class, 'instansi_id');
+    }
+    public function unit_kerja()
+    {
+        return $this->belongsTo(\App\Models\UnitKerja::class, 'unit_kerja_id');
+    }
 }

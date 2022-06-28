@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DisposisiList extends Model
+class Disposisi extends Model
 {
-    protected $table = 'disposisi_list';
+    protected $table = 'disposisi';
     protected $primaryKey = 'id';
     public $incrementing = false;
     // protected $dates = ['deleted_at'];
@@ -14,6 +14,9 @@ class DisposisiList extends Model
 
     public $fillable = [
         'id',
-        'nama_disposisi',
+        'surat_masuk_id',
+        'dari',
+        'keterangan',
+        'diterima',
     ];
 }

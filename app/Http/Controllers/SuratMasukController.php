@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\Instansi;
 use App\Models\SuratMasuk;
 use App\Models\Klasifikasi;
+use App\Models\Disposisi;
 use \Carbon\Carbon;
 use Validator;
 use DataTables;
@@ -48,17 +49,17 @@ class SuratMasukController extends Controller
                             // return Carbon::parse($row->tanggal_surat)->isoFormat('LL');
                         })
                         ->addColumn('pengirim', function($row){
-                            return '-';
+                            return $row->unit_kerja->unit_kerja;
                         })
                         ->addColumn('disposisi', function($row){
-                            return '-';
+                            return '<button class="btn btn-success btn-xs"><i class="fa fa-upload"></i></button>'.' Waiting Disposisi';
                         })
                         ->addColumn('action', function($row){
                             $btn = '<button type="button" onclick="edit(`'.$row->id.'`)" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
                             $btn = $btn.'<button type="button" data-type="confirm" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
                             return $btn;
                         })
-                        ->rawColumns(['action','nomor_surat_masuk'])
+                        ->rawColumns(['action','nomor_surat_masuk','disposisi'])
                         ->make(true);
         }
         if(auth()->user()->is_role == 1){
@@ -131,5 +132,38 @@ class SuratMasukController extends Controller
         //     return redirect()->back();
         // }
         return view('backend.surat_masuk.view',compact('surat_masuk'));
+    }
+
+    public function berkas($id)
+    {
+        $surat_masuk = SuratMasuk::find($id);
+        $pathToFile = asset('backend_4/berkas/'.$surat_masuk->file);
+        // $headers = array(
+        //     'Content-Type: application',
+        //   );
+        $headers=array(
+            'Content-Type'=>'application/octet-stream',
+            );
+        // return response()->download($pathToFile);
+        return response()->download($pathToFile, $surat_masuk->file, $headers);
+        // return return response()->download($pathToFile, $name, $headers);;
+    }
+
+    public function disposisi($id)
+    {
+        $surat_masuk = SuratMasuk::find($id);
+        if(empty($surat_masuk)){
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Tidak Ditemukan'
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'id' => $surat_masuk->id,
+                'isi_ringkasan' => $surat_masuk->isi_ringkasan,
+            ]
+        ]);
     }
 }

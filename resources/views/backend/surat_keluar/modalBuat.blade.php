@@ -55,7 +55,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Isi Ringkasan</label>
+                    <label>Perihal</label>
                     <input type="text" name="isi_ringkasan" class="form-control" placeholder="Isi Ringkasan">
                 </div>
                 <div class="form-group">

@@ -15,8 +15,10 @@ class CreateDisposisiTable extends Migration
     {
         Schema::create('disposisi', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('no_urut');
-            $table->dateTime('tgl_diterima');
+            $table->uuid('surat_masuk_id');
+            $table->uuid('dari');
+            $table->string('keterangan');
+            $table->uuid('diterima')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

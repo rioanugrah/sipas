@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
+    // return view('welcome');
 });
 
 Auth::routes();
@@ -33,6 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::prefix('surat_masuk')->group(function () {
             Route::get('/', 'SuratMasukController@index')->name('surat_masuk');
             Route::get('/page/{id}', 'SuratMasukController@page')->name('surat_masuk.pages');
+            Route::get('/disposisi/{id}', 'SuratMasukController@disposisi')->name('surat_masuk.disposisi');
+            Route::get('/{id}/berkas', 'SuratMasukController@berkas')->name('surat_masuk.berkas');
             Route::get('/simpan', 'SuratMasukController@simpan')->name('surat_masuk.simpan');
         });
         Route::prefix('surat_keluar')->group(function () {
