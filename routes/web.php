@@ -33,8 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::prefix('surat_masuk')->group(function () {
             Route::get('/', 'SuratMasukController@index')->name('surat_masuk');
+            Route::get('/unit_kerja', 'SuratMasukController@unit_kerja')->name('surat_masuk.unit_kerja');
             Route::get('/page/{id}', 'SuratMasukController@page')->name('surat_masuk.pages');
             Route::get('/disposisi/{id}', 'SuratMasukController@disposisi')->name('surat_masuk.disposisi');
+            Route::post('/disposisi/simpan', 'SuratMasukController@disposisi_simpan')->name('surat_masuk.disposisi.simpan');
             Route::get('/{id}/berkas', 'SuratMasukController@berkas')->name('surat_masuk.berkas');
             Route::get('/simpan', 'SuratMasukController@simpan')->name('surat_masuk.simpan');
         });

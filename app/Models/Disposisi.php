@@ -19,4 +19,13 @@ class Disposisi extends Model
         'keterangan',
         'diterima',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(\App\User::class, 'dari');
+    }
+    public function unit_kerja()
+    {
+        return $this->belongsTo(\App\Models\UnitKerja::class, 'diterima');
+    }
 }

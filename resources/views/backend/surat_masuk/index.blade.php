@@ -56,6 +56,7 @@
         </div>
     </div>
     @include('backend.surat_masuk.modalBuat')
+    @include('backend.surat_masuk.modalDisposisi')
 @endsection
 @section('js')
     <script src="{{ $link }}/assets/bundles/datatablescripts.bundle.js"></script>
@@ -107,6 +108,91 @@
         function add() {
             $('#modalBuat').modal();
         }
+
+        function unit_kerja() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('surat_masuk.unit_kerja') }}",
+                contentType: "application/json;  charset=utf-8",
+                cache: false,
+                success: function(result) {
+                    const hasilData = result.data;
+                    var text = "";
+                    hasilData.forEach(checkData);
+                    function checkData(value,index) {
+                        text = text+'<option value="'+value.id+'">'+value.unit_kerja+'</option>';
+                    }
+                    document.getElementById("disposisi_kepada").innerHTML = text;
+                }
+            })
+        }
+
+        function modalDisposisi(p) {
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('b/surat_masuk/disposisi') }}"+'/'+p,
+                contentType: "application/json;  charset=utf-8",
+                cache: false,
+                success: function(result) {
+                    document.getElementById('disposisi_perihal').innerHTML = result.data.isi_ringkasan;
+                    document.getElementById('titleDisposisi').innerHTML = '<label class="badge badge-dark" style="font-size: 80%">#Disposisi</label> Disposisi Surat Masuk No: '+result.data.nomor_surat_masuk;
+                    $('#disposisi_surat_masuk_id').val(result.data.id);
+                    $('#modalDisposisi').modal();
+                }
+            })
+        }
+
+        $('.disposisi-form').submit(function(e) {
+            e.preventDefault();
+            // var form = $(this);
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('surat_masuk.disposisi.simpan') }}",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (result) => {
+                    if (result.success == true) {
+                        // swal({
+                        //     title: result.message_title,
+                        //     text: result.message_content,
+                        //     icon: result.message_type,
+                        //     padding: '2em'
+                        // })
+                        alert(result.message_title);
+                        // toastr.success(result.message_title,'',{
+                        //     positionClass: 'toast-bottom-full-width'
+                        // });
+                        table.ajax.reload();
+                        // $('#modalBuat').modal('hide');
+                    } else {
+                        // swal({
+                        //     title: 'Gagal',
+                        //     text: 'Data Gagal Disimpan',
+                        //     icon: 'error',
+                        //     padding: '2em'
+                        // })
+                        alert(result.error);
+                        // toastr.error(result.error,'',{
+                        //     positionClass: 'toast-top-full-width'
+                        // });
+                    }
+                },
+                error: function(request, status, error) {
+                    // swal({
+                    //     title: error,
+                    //     type: 'error',
+                    //     padding: '2em'
+                    // })
+                    alert(error);
+                    // toastr.error(error,'',{
+                    //     positionClass: 'toast-top-full-width'
+                    // });
+                }
+            })
+        });
         
+        unit_kerja();
     </script>
 @endsection
