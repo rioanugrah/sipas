@@ -24,6 +24,10 @@ class Disposisi extends Model
     {
         return $this->belongsTo(\App\User::class, 'dari');
     }
+    public function surat()
+    {
+        return $this->belongsTo(\App\Models\SuratMasuk::class, 'surat_masuk_id');
+    }
     public function unit_kerja()
     {
         return $this->belongsTo(\App\Models\UnitKerja::class, 'diterima');

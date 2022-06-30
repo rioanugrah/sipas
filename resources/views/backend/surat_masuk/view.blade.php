@@ -113,7 +113,7 @@
                                 <th>Keterangan</th>
                                 <th>Diteruskan</th>
                             </tr>
-                            @foreach ($disposisis as $key => $disposisi)
+                            @forelse ($disposisis as $key => $disposisi)
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $disposisi->created_at }}</td>
@@ -121,7 +121,11 @@
                                 <td>{{ $disposisi->keterangan }}</td>
                                 <td>{{ $disposisi->unit_kerja->unit_kerja }}</td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Data Belum Tersedia</td>
+                            </tr>
+                            @endforelse
                         </table>
                         {{-- <p>pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify
                             squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel </p> --}}

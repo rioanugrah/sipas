@@ -43,7 +43,7 @@
                                     <th>Nomor Surat</th>
                                     <th>Nomor Agenda</th>
                                     <th>Sifat Surat</th>
-                                    <th>Pengirim</th>
+                                    <th>Penerima</th>
                                     <th>Disposisi Saat Ini</th>
                                     <th>Action</th>
                                 </tr>

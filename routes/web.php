@@ -45,6 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/page/{id}', 'SuratKeluarController@page')->name('surat_keluar.pages');
             Route::post('/simpan', 'SuratKeluarController@simpan')->name('surat_keluar.simpan');
         });
+        Route::prefix('disposisi')->group(function () {
+            Route::get('/', 'DisposisiController@index')->name('disposisi');
+        });
         Route::prefix('instansi')->group(function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
             Route::get('/{id}', 'InstansiController@detail')->name('instansi.detail');

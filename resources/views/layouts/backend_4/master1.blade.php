@@ -24,6 +24,7 @@
         <div id="wrapper">
             @include('layouts.backend_4.header')
             @include('layouts.backend_4.sidebar')
+            @yield('sticky')
             <div id="main-content">
                 <div class="container-fluid">
                     @yield('content')
