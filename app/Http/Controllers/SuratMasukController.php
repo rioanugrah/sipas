@@ -55,12 +55,12 @@ class SuratMasukController extends Controller
                         ->addColumn('disposisi', function($row){
                             return '<button class="btn btn-success btn-xs" onclick="modalDisposisi(`'.$row->id.'`)"><i class="fa fa-upload"></i></button>'.' Waiting Disposisi';
                         })
-                        ->addColumn('action', function($row){
-                            $btn = '<button type="button" onclick="edit(`'.$row->id.'`)" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
-                            $btn = $btn.'<button type="button" data-type="confirm" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
-                            return $btn;
-                        })
-                        ->rawColumns(['action','nomor_surat_masuk','disposisi'])
+                        // ->addColumn('action', function($row){
+                        //     $btn = '<button type="button" onclick="edit(`'.$row->id.'`)" class="btn btn-warning" title="Edit"><i class="fa fa-edit"></i></button>';
+                        //     $btn = $btn.'<button type="button" data-type="confirm" class="btn btn-danger" title="Delete"><i class="fa fa-trash-o"></i></button>';
+                        //     return $btn;
+                        // })
+                        ->rawColumns(['nomor_surat_masuk','disposisi'])
                         ->make(true);
         }
         if(auth()->user()->is_role == 1){

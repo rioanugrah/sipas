@@ -45,7 +45,7 @@
                                     <th>Sifat Surat</th>
                                     <th>Penerima</th>
                                     <th>Disposisi Saat Ini</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -96,12 +96,12 @@
                     data: 'disposisi',
                     name: 'disposisi'
                 },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
+                // {
+                //     data: 'action',
+                //     name: 'action',
+                //     orderable: false,
+                //     searchable: false
+                // },
             ]
         });
 

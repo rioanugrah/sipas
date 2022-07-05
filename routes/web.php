@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
         Route::prefix('disposisi')->group(function () {
             Route::get('/', 'DisposisiController@index')->name('disposisi');
+            Route::get('/page/{id}', 'DisposisiController@detail')->name('disposisi.detail');
         });
         Route::prefix('instansi')->group(function () {
             Route::get('/', 'InstansiController@index')->name('instansi');
